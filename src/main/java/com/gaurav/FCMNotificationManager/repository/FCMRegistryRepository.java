@@ -3,7 +3,12 @@ package com.gaurav.FCMNotificationManager.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.gaurav.FCMNotificationManager.entity.FCMRegistryEntity;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface FCMRegistryRepository extends JpaRepository<FCMRegistryEntity, Long> {
+import java.util.List;
+
+public interface FCMRegistryRepository extends JpaRepository<FCMRegistryEntity, Long>, JpaSpecificationExecutor<FCMRegistryEntity> {
+
+    List<FCMRegistryEntity> findAllByFcmId(String fcmId);
 
 }

@@ -2,13 +2,17 @@ package com.gaurav.FCMNotificationManager.dto;
 
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BaseResponseDto {
 
-	private long id;
+	protected long id;
 
-	private Date createdAt;
+	protected Date createdAt;
 
 }

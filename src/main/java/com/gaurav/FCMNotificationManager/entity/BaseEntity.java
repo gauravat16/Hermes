@@ -1,17 +1,22 @@
 package com.gaurav.FCMNotificationManager.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-
+@Data
+@NoArgsConstructor
+@MappedSuperclass
 public class BaseEntity {
 
-	@Column(name = "ID")
-	@GeneratedValue
-	private long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
+	public long id;
 	
 	@Column(name = "CREATED_AT")
-	private Date createdAt = new Date();
+	public Date createdAt = new Date();
 
 }

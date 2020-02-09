@@ -2,6 +2,9 @@ package com.gaurav.FCMNotificationManager.dto;
 
 import lombok.Data;
 
+/**
+ *
+ */
 @Data
 public class FCMRegistrationRequest {
 

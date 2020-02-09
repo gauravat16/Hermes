@@ -1,9 +1,12 @@
 package com.gaurav.FCMNotificationManager.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 /**
  * 
@@ -12,8 +15,17 @@ import lombok.Data;
  */
 @Entity(name = "FCM_REGISTRY")
 @Data
+@NoArgsConstructor
 public class FCMRegistryEntity extends BaseEntity {
-	
+
+	@Builder
+	public FCMRegistryEntity(String deviceName, String osVersion, String appVersion, String fcmId) {
+		this.deviceName = deviceName;
+		this.osVersion = osVersion;
+		this.appVersion = appVersion;
+		this.fcmId = fcmId;
+	}
+
 	@Column(name = "DEVICE_NAME")
 	private String deviceName;
 	

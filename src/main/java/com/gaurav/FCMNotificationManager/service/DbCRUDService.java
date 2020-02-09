@@ -1,5 +1,7 @@
 package com.gaurav.FCMNotificationManager.service;
 
+import java.util.List;
+
 /**
  * 
  * @author gaurav
@@ -17,7 +19,7 @@ public interface DbCRUDService<E, REQ, RESP, ID> {
 
 	RESP create(REQ req);
 
-	RESP read(REQ req);
+	List<RESP> read(REQ req);
 
 	RESP update(REQ req);
 
