@@ -23,7 +23,7 @@ public interface DbCRUDService<E, REQ, RESP, ID> {
 
 	RESP update(REQ req);
 
-	RESP delete(REQ req);
+	void delete(REQ req);
 
 	RESP find(REQ req);
 

@@ -5,8 +5,10 @@ import com.gaurav.FCMNotificationManager.dto.FCMRegistrationResponse;
 import com.gaurav.FCMNotificationManager.entity.FCMRegistryEntity;
 import com.gaurav.FCMNotificationManager.repository.FCMRegistryRepository;
 import com.gaurav.FCMNotificationManager.service.DbCRUDService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +43,11 @@ public class FCMRegistrationDBService implements DbCRUDService<FCMRegistryEntity
 
     @Override
     public FCMRegistrationResponse create(FCMRegistrationRequest fcmRegistrationRequest) {
+        Assert.notNull(fcmRegistrationRequest.getFcmId(), "No fcm id present to update");
+
+        if (fcmRegistryRepository.findByFcmId(fcmRegistrationRequest.getFcmId()) != null) {
+            throw new RuntimeException("FCM data already present");
+        }
         return mapEntityToResponse(fcmRegistryRepository.save(mapRequestToEntity(fcmRegistrationRequest)));
     }
 
@@ -55,12 +62,20 @@ public class FCMRegistrationDBService implements DbCRUDService<FCMRegistryEntity
 
     @Override
     public FCMRegistrationResponse update(FCMRegistrationRequest fcmRegistrationRequest) {
-        return null;
+        Assert.notNull(fcmRegistrationRequest.getFcmId(), "No fcm id present to update");
+        FCMRegistryEntity fcmRegistryEntity = fcmRegistryRepository.findByFcmId(fcmRegistrationRequest.getFcmId());
+        Assert.notNull(fcmRegistryEntity, "No data found for " + fcmRegistrationRequest.getFcmId());
+
+        BeanUtils.copyProperties(fcmRegistrationRequest, fcmRegistryEntity);
+        return mapEntityToResponse(fcmRegistryRepository.save(fcmRegistryEntity));
     }
 
     @Override
-    public FCMRegistrationResponse delete(FCMRegistrationRequest fcmRegistrationRequest) {
-        return null;
+    public void delete(FCMRegistrationRequest fcmRegistrationRequest) {
+        Assert.notNull(fcmRegistrationRequest.getFcmId(), "No fcm id present to update");
+        FCMRegistryEntity fcmRegistryEntity = fcmRegistryRepository.findByFcmId(fcmRegistrationRequest.getFcmId());
+        Assert.notNull(fcmRegistryEntity, "No data to delete!");
+        fcmRegistryRepository.delete(fcmRegistryEntity);
     }
 
     @Override

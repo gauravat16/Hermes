@@ -16,6 +16,7 @@ import java.util.Date;
 @Entity(name = "FCM_REGISTRY")
 @Data
 @NoArgsConstructor
+@Table(indexes = {@Index(columnList = "FCM_ID")})
 public class FCMRegistryEntity extends BaseEntity {
 
 	@Builder
@@ -34,7 +35,7 @@ public class FCMRegistryEntity extends BaseEntity {
 	
 	@Column(name = "APP_VERSION")
 	private String appVersion;
-	
-	@Column(name = "FCM_ID")
+
+	@Column(name = "FCM_ID", unique = true)
 	private String fcmId;
 }

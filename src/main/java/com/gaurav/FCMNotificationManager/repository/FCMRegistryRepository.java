@@ -11,4 +11,6 @@ public interface FCMRegistryRepository extends JpaRepository<FCMRegistryEntity, 
 
     List<FCMRegistryEntity> findAllByFcmId(String fcmId);
 
+    FCMRegistryEntity findByFcmId(String fcmId);
+
 }

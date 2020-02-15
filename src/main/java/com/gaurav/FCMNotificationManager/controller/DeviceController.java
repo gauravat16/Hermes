@@ -1,5 +1,8 @@
 package com.gaurav.FCMNotificationManager.controller;
 
+import com.gaurav.FCMNotificationManager.dto.BaseResponseDto;
+import com.gaurav.FCMNotificationManager.dto.FCMRegistrationResponse;
+import com.gaurav.FCMNotificationManager.entity.FCMRegistryEntity;
 import com.gaurav.FCMNotificationManager.service.DbCRUDService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,25 +16,36 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gaurav.FCMNotificationManager.dto.FCMRegistrationRequest;
 
 /**
- * 
  * @author gaurav
- *
  */
 @Api("")
 @RestController
 @RequestMapping("device")
 public class DeviceController {
 
-	@Autowired
-	@Qualifier("FCMDbService")
-	private DbCRUDService dbCRUDService;
+    @Autowired
+    @Qualifier("FCMDbService")
+    private DbCRUDService<FCMRegistryEntity, FCMRegistrationRequest, FCMRegistrationResponse, Long> dbCRUDService;
 
 
-	@ApiOperation("")
-	@PostMapping("record/fcm-request")
+    @ApiOperation("Record new fcm request")
+    @PostMapping("record/fcm-request")
 
-	public void recordFCMRequest(@RequestBody FCMRegistrationRequest registrationRequest) {
-		dbCRUDService.create(registrationRequest);
-	}
+    public BaseResponseDto<FCMRegistrationResponse> recordFCMRequest(@RequestBody FCMRegistrationRequest registrationRequest) {
+        return new BaseResponseDto<>(dbCRUDService.create(registrationRequest));
+    }
+
+    @ApiOperation("Update fcm request")
+    @PostMapping("update/fcm-request")
+    public BaseResponseDto<FCMRegistrationResponse> updateFCMRequest(@RequestBody FCMRegistrationRequest registrationRequest) {
+        return new BaseResponseDto<>(dbCRUDService.update(registrationRequest));
+    }
+
+    @ApiOperation("Delete fcm details")
+    @PostMapping("delete/fcm-request")
+    public BaseResponseDto<String> detailsFCMRequest(@RequestBody FCMRegistrationRequest registrationRequest) {
+        dbCRUDService.delete(registrationRequest);
+        return new BaseResponseDto<>("Deleted!");
+    }
 
 }
