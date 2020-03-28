@@ -25,6 +25,6 @@ public interface DbCRUDService<E, REQ, RESP, ID> {
 
 	void delete(REQ req);
 
-	RESP find(REQ req);
+	List<RESP> find(REQ req);
 
 }

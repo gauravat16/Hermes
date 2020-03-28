@@ -8,12 +8,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.gaurav.FCMNotificationManager.dto.FCMRegistrationRequest;
+
+import java.util.List;
 
 /**
  * @author gaurav
@@ -36,16 +35,22 @@ public class DeviceController {
     }
 
     @ApiOperation("Update fcm request")
-    @PostMapping("update/fcm-request")
+    @PutMapping("update/fcm-request")
     public BaseResponseDto<FCMRegistrationResponse> updateFCMRequest(@RequestBody FCMRegistrationRequest registrationRequest) {
         return new BaseResponseDto<>(dbCRUDService.update(registrationRequest));
     }
 
     @ApiOperation("Delete fcm details")
-    @PostMapping("delete/fcm-request")
+    @DeleteMapping("delete/fcm-request")
     public BaseResponseDto<String> detailsFCMRequest(@RequestBody FCMRegistrationRequest registrationRequest) {
         dbCRUDService.delete(registrationRequest);
         return new BaseResponseDto<>("Deleted!");
+    }
+
+    @ApiOperation("Find fcm details")
+    @PostMapping("find/fcm-request")
+    public BaseResponseDto<List<FCMRegistrationResponse>> findData(@RequestBody FCMRegistrationRequest registrationRequest) {
+        return new BaseResponseDto<>(dbCRUDService.find(registrationRequest));
     }
 
 }
