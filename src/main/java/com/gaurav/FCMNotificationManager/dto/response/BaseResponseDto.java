@@ -1,4 +1,4 @@
-package com.gaurav.FCMNotificationManager.dto;
+package com.gaurav.FCMNotificationManager.dto.response;
 
 import java.util.Date;
 import java.util.UUID;

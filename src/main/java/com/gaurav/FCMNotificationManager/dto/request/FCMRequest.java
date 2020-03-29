@@ -1,4 +1,4 @@
-package com.gaurav.FCMNotificationManager.dto;
+package com.gaurav.FCMNotificationManager.dto.request;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import lombok.Data;
  *
  */
 @Data
-public class FCMRegistrationRequest {
+public class FCMRequest {
 
 	private String deviceName;
 	private String osVersion;

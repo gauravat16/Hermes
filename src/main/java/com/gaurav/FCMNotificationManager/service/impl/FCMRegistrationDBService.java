@@ -1,6 +1,6 @@
 package com.gaurav.FCMNotificationManager.service.impl;
 
-import com.gaurav.FCMNotificationManager.dto.FCMRegistrationRequest;
+import com.gaurav.FCMNotificationManager.dto.request.FCMRequest;
 import com.gaurav.FCMNotificationManager.dto.FCMRegistrationResponse;
 import com.gaurav.FCMNotificationManager.entity.FCMRegistryEntity;
 import com.gaurav.FCMNotificationManager.jpa.criteria.constants.Appender;
@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("FCMDbService")
-public class FCMRegistrationDBService implements DbCRUDService<FCMRegistryEntity, FCMRegistrationRequest, FCMRegistrationResponse, Long> {
+public class FCMRegistrationDBService implements DbCRUDService<FCMRegistryEntity, FCMRequest, FCMRegistrationResponse, Long> {
 
     @Autowired
     private FCMRegistryRepository fcmRegistryRepository;
 
     @Override
-    public FCMRegistryEntity mapRequestToEntity(FCMRegistrationRequest request) {
+    public FCMRegistryEntity mapRequestToEntity(FCMRequest request) {
         return FCMRegistryEntity.builder()
                 .appVersion(request.getAppVersion())
                 .deviceName(request.getDeviceName())
@@ -46,66 +46,66 @@ public class FCMRegistrationDBService implements DbCRUDService<FCMRegistryEntity
     }
 
     @Override
-    public FCMRegistrationResponse create(FCMRegistrationRequest fcmRegistrationRequest) {
-        Assert.notNull(fcmRegistrationRequest.getFcmId(), "No fcm id present to update");
+    public FCMRegistrationResponse create(FCMRequest fcmRequest) {
+        Assert.notNull(fcmRequest.getFcmId(), "No fcm id present to update");
 
-        if (fcmRegistryRepository.findByFcmId(fcmRegistrationRequest.getFcmId()) != null) {
+        if (fcmRegistryRepository.findByFcmId(fcmRequest.getFcmId()) != null) {
             throw new RuntimeException("FCM data already present");
         }
-        return mapEntityToResponse(fcmRegistryRepository.save(mapRequestToEntity(fcmRegistrationRequest)));
+        return mapEntityToResponse(fcmRegistryRepository.save(mapRequestToEntity(fcmRequest)));
     }
 
     @Override
-    public List<FCMRegistrationResponse> read(final FCMRegistrationRequest fcmRegistrationRequest) {
-        List<FCMRegistrationResponse> responses = fcmRegistryRepository.findAllByFcmId(fcmRegistrationRequest.getFcmId()).
+    public List<FCMRegistrationResponse> read(final FCMRequest fcmRequest) {
+        List<FCMRegistrationResponse> responses = fcmRegistryRepository.findAllByFcmId(fcmRequest.getFcmId()).
                 stream()
-                .map(e -> mapEntityToResponse(e))
+                .map(this::mapEntityToResponse)
                 .collect(Collectors.toList());
         return responses;
     }
 
     @Override
-    public FCMRegistrationResponse update(FCMRegistrationRequest fcmRegistrationRequest) {
-        Assert.notNull(fcmRegistrationRequest.getFcmId(), "No fcm id present to update");
-        FCMRegistryEntity fcmRegistryEntity = fcmRegistryRepository.findByFcmId(fcmRegistrationRequest.getFcmId());
-        Assert.notNull(fcmRegistryEntity, "No data found for " + fcmRegistrationRequest.getFcmId());
+    public FCMRegistrationResponse update(FCMRequest fcmRequest) {
+        Assert.notNull(fcmRequest.getFcmId(), "No fcm id present to update");
+        FCMRegistryEntity fcmRegistryEntity = fcmRegistryRepository.findByFcmId(fcmRequest.getFcmId());
+        Assert.notNull(fcmRegistryEntity, "No data found for " + fcmRequest.getFcmId());
 
-        BeanUtils.copyProperties(fcmRegistrationRequest, fcmRegistryEntity);
+        BeanUtils.copyProperties(fcmRequest, fcmRegistryEntity);
         return mapEntityToResponse(fcmRegistryRepository.save(fcmRegistryEntity));
     }
 
     @Override
-    public void delete(FCMRegistrationRequest fcmRegistrationRequest) {
-        Assert.notNull(fcmRegistrationRequest, "No req present to delete");
-        List<FCMRegistryEntity> fcmRegistryEntityList = findAllEntities(fcmRegistrationRequest);
+    public void delete(FCMRequest fcmRequest) {
+        Assert.notNull(fcmRequest, "No req present to delete");
+        List<FCMRegistryEntity> fcmRegistryEntityList = findAllEntities(fcmRequest);
         fcmRegistryEntityList.forEach(fcmRegistryEntity -> fcmRegistryRepository.delete(fcmRegistryEntity));
     }
 
     @Override
-    public List<FCMRegistrationResponse> find(FCMRegistrationRequest fcmRegistrationRequest) {
-        return findAllEntities(fcmRegistrationRequest).stream().map(this::mapEntityToResponse).collect(Collectors.toList());
+    public List<FCMRegistrationResponse> find(FCMRequest fcmRequest) {
+        return findAllEntities(fcmRequest).stream().map(this::mapEntityToResponse).collect(Collectors.toList());
     }
 
 
-    private List<FCMRegistryEntity> findAllEntities(FCMRegistrationRequest fcmRegistrationRequest) {
+    private List<FCMRegistryEntity> findAllEntities(FCMRequest fcmRequest) {
         CustomSpecification<FCMRegistryEntity> customSpecification = new CustomSpecification<>();
 
-        if (null != fcmRegistrationRequest.getFcmId()) {
-            customSpecification.add(SearchCriteria.of("fcmId", fcmRegistrationRequest.getFcmId(), Operation.EQUALS, Appender.AND));
+        if (null != fcmRequest.getFcmId()) {
+            customSpecification.add(SearchCriteria.of("fcmId", fcmRequest.getFcmId(), Operation.EQUALS, Appender.AND));
         }
 
-        if (null != fcmRegistrationRequest.getOsVersion()) {
-            customSpecification.add(SearchCriteria.of("osVersion", fcmRegistrationRequest.getOsVersion(), Operation.EQUALS, Appender.AND));
-        }
-
-
-        if (null != fcmRegistrationRequest.getDeviceName()) {
-            customSpecification.add(SearchCriteria.of("deviceName", fcmRegistrationRequest.getDeviceName(), Operation.LIKE, Appender.AND));
+        if (null != fcmRequest.getOsVersion()) {
+            customSpecification.add(SearchCriteria.of("osVersion", fcmRequest.getOsVersion(), Operation.EQUALS, Appender.AND));
         }
 
 
-        if (null != fcmRegistrationRequest.getAppVersion()) {
-            customSpecification.add(SearchCriteria.of("appVersion", fcmRegistrationRequest.getAppVersion(), Operation.EQUALS, Appender.AND));
+        if (null != fcmRequest.getDeviceName()) {
+            customSpecification.add(SearchCriteria.of("deviceName", fcmRequest.getDeviceName(), Operation.LIKE, Appender.AND));
+        }
+
+
+        if (null != fcmRequest.getAppVersion()) {
+            customSpecification.add(SearchCriteria.of("appVersion", fcmRequest.getAppVersion(), Operation.EQUALS, Appender.AND));
         }
 
         return fcmRegistryRepository.findAll(customSpecification);
