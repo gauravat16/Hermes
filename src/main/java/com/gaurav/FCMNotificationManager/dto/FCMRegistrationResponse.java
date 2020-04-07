@@ -9,16 +9,16 @@ import java.util.Date;
 public class FCMRegistrationResponse {
 
 	@Builder
-	public FCMRegistrationResponse(long id, Date createdAt, String deviceName, String osVersion, String appVersion, String fcmId) {
+	public FCMRegistrationResponse(long id, Date createdAt, String deviceName, String osVersion, String appVersion, String cloudMessagingId) {
 		this.deviceName = deviceName;
 		this.osVersion = osVersion;
 		this.appVersion = appVersion;
-		this.fcmId = fcmId;
+		this.cloudMessagingId = cloudMessagingId;
 	}
 
 	private String deviceName;
 	private String osVersion;
 	private String appVersion;
-	private String fcmId;
+	private String cloudMessagingId;
 
 }

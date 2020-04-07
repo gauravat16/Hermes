@@ -6,25 +6,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
  * 
  * @author gaurav
  *
  */
-@Entity(name = "FCM_REGISTRY")
+@Entity(name = "CLOUD_MESSAGING_REGISTRY")
 @Data
 @NoArgsConstructor
-@Table(indexes = {@Index(columnList = "FCM_ID")})
+@Table(indexes = {@Index(columnList = "CLOUD_MESSAGING_ID")})
 public class FCMRegistryEntity extends BaseEntity {
 
 	@Builder
-	public FCMRegistryEntity(String deviceName, String osVersion, String appVersion, String fcmId) {
+	public FCMRegistryEntity(String deviceName, String osVersion, String appVersion, String cloudMessagingId) {
 		this.deviceName = deviceName;
 		this.osVersion = osVersion;
 		this.appVersion = appVersion;
-		this.fcmId = fcmId;
+		this.cloudMessagingId = cloudMessagingId;
 	}
 
 	@Column(name = "DEVICE_NAME")
@@ -36,6 +34,6 @@ public class FCMRegistryEntity extends BaseEntity {
 	@Column(name = "APP_VERSION")
 	private String appVersion;
 
-	@Column(name = "FCM_ID", unique = true)
-	private String fcmId;
+	@Column(name = "CLOUD_MESSAGING_ID", unique = true)
+	private String cloudMessagingId;
 }

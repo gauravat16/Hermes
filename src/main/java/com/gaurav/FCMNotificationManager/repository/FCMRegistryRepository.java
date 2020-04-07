@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface FCMRegistryRepository extends JpaRepository<FCMRegistryEntity, Long>, JpaSpecificationExecutor<FCMRegistryEntity> {
 
-    List<FCMRegistryEntity> findAllByFcmId(String fcmId);
+    List<FCMRegistryEntity> findAllByCloudMessagingId(String fcmId);
 
-    FCMRegistryEntity findByFcmId(String fcmId);
+    FCMRegistryEntity findByCloudMessagingId(String fcmId);
 
 }

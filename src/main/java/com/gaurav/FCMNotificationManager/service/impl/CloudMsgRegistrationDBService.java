@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("FCMDbService")
-public class FCMRegistrationDBService implements DbCRUDService<FCMRegistryEntity, FCMRequest, FCMRegistrationResponse, Long> {
+public class CloudMsgRegistrationDBService implements DbCRUDService<FCMRegistryEntity, FCMRequest, FCMRegistrationResponse, Long> {
 
     @Autowired
     private FCMRegistryRepository fcmRegistryRepository;
@@ -28,7 +28,7 @@ public class FCMRegistrationDBService implements DbCRUDService<FCMRegistryEntity
         return FCMRegistryEntity.builder()
                 .appVersion(request.getAppVersion())
                 .deviceName(request.getDeviceName())
-                .fcmId(request.getFcmId())
+                .cloudMessagingId(request.getFcmId())
                 .osVersion(request.getOsVersion())
                 .build();
     }
@@ -38,7 +38,7 @@ public class FCMRegistrationDBService implements DbCRUDService<FCMRegistryEntity
         return FCMRegistrationResponse.builder()
                 .appVersion(entity.getAppVersion())
                 .deviceName(entity.getDeviceName())
-                .fcmId(entity.getFcmId())
+                .cloudMessagingId(entity.getCloudMessagingId())
                 .osVersion(entity.getOsVersion())
                 .id(entity.getId())
                 .createdAt(entity.getCreatedAt())
@@ -49,7 +49,7 @@ public class FCMRegistrationDBService implements DbCRUDService<FCMRegistryEntity
     public FCMRegistrationResponse create(FCMRequest fcmRequest) {
         Assert.notNull(fcmRequest.getFcmId(), "No fcm id present to update");
 
-        if (fcmRegistryRepository.findByFcmId(fcmRequest.getFcmId()) != null) {
+        if (fcmRegistryRepository.findByCloudMessagingId(fcmRequest.getFcmId()) != null) {
             throw new RuntimeException("FCM data already present");
         }
         return mapEntityToResponse(fcmRegistryRepository.save(mapRequestToEntity(fcmRequest)));
@@ -57,7 +57,7 @@ public class FCMRegistrationDBService implements DbCRUDService<FCMRegistryEntity
 
     @Override
     public List<FCMRegistrationResponse> read(final FCMRequest fcmRequest) {
-        List<FCMRegistrationResponse> responses = fcmRegistryRepository.findAllByFcmId(fcmRequest.getFcmId()).
+        List<FCMRegistrationResponse> responses = fcmRegistryRepository.findAllByCloudMessagingId(fcmRequest.getFcmId()).
                 stream()
                 .map(this::mapEntityToResponse)
                 .collect(Collectors.toList());
@@ -67,7 +67,7 @@ public class FCMRegistrationDBService implements DbCRUDService<FCMRegistryEntity
     @Override
     public FCMRegistrationResponse update(FCMRequest fcmRequest) {
         Assert.notNull(fcmRequest.getFcmId(), "No fcm id present to update");
-        FCMRegistryEntity fcmRegistryEntity = fcmRegistryRepository.findByFcmId(fcmRequest.getFcmId());
+        FCMRegistryEntity fcmRegistryEntity = fcmRegistryRepository.findByCloudMessagingId(fcmRequest.getFcmId());
         Assert.notNull(fcmRegistryEntity, "No data found for " + fcmRequest.getFcmId());
 
         BeanUtils.copyProperties(fcmRequest, fcmRegistryEntity);

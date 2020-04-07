@@ -2,8 +2,8 @@ package com.gaurav.FCMNotificationManager.controller;
 
 import com.gaurav.FCMNotificationManager.dto.request.SendMsgRequest;
 import com.gaurav.FCMNotificationManager.dto.response.FCMResponse;
-import com.gaurav.FCMNotificationManager.service.impl.FCMMessenger;
-import com.gaurav.FCMNotificationManager.service.impl.FCMRegistrationDBService;
+import com.gaurav.FCMNotificationManager.service.impl.CloudMessenger;
+import com.gaurav.FCMNotificationManager.service.impl.CloudMsgRegistrationDBService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,24 +17,24 @@ import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
-@RequestMapping("messaging/fcm")
-public class FCMController {
+@RequestMapping("cloud/messaging")
+public class MessagingController {
 
     @Autowired
-    private FCMMessenger fcmMessenger;
+    private CloudMessenger cloudMessenger;
 
     @Autowired
-    private FCMRegistrationDBService dbCRUDService;
+    private CloudMsgRegistrationDBService dbCRUDService;
 
-    @PostMapping("/send_message")
+    @PostMapping("/new-message")
     public List<FCMResponse> sendMessage(@RequestBody SendMsgRequest msgRequest) {
 
         return dbCRUDService.find(msgRequest.getFcmRequest()).stream().map(e -> {
-            msgRequest.getMessage().setTo(e.getFcmId());
+            msgRequest.getMessage().setTo(e.getCloudMessagingId());
             try {
-                return fcmMessenger.sendMessageToUser(msgRequest.getMessage());
+                return cloudMessenger.sendMessageToUser(msgRequest.getMessage());
             }catch (Exception ex){
-                log.debug("Failed to send msg to " + e.getFcmId() ,ex);
+                log.debug("Failed to send msg to " + e.getCloudMessagingId() ,ex);
             }
             return null;
 

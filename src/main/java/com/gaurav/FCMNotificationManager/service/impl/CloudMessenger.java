@@ -13,13 +13,13 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 
 @Service
-public class FCMMessenger implements Messenger<FCMMessage, FCMResponse> {
+public class CloudMessenger implements Messenger<FCMMessage, FCMResponse> {
 
     private final WebServiceConfig webServiceConfig;
 
     private final RestTemplate restTemplate;
 
-    public FCMMessenger(WebServiceConfig webServiceConfig, RestTemplate restTemplate) {
+    public CloudMessenger(WebServiceConfig webServiceConfig, RestTemplate restTemplate) {
         this.webServiceConfig = webServiceConfig;
         this.restTemplate = restTemplate;
     }
