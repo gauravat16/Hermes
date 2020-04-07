@@ -6,11 +6,11 @@ import lombok.Data;
  *
  */
 @Data
-public class FCMRequest {
+public class CloudMessageRequest {
 
 	private String deviceName;
 	private String osVersion;
 	private String appVersion;
-	private String fcmId;
+	private String cloudMessageId;
 
 }

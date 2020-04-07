@@ -1,4 +1,4 @@
-package com.hermes.cloudmessaging.entity;
+package com.hermes.cloudmessaging.entity.rdbms;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

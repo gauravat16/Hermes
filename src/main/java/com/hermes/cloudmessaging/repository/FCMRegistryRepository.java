@@ -2,7 +2,7 @@ package com.hermes.cloudmessaging.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.hermes.cloudmessaging.entity.FCMRegistryEntity;
+import com.hermes.cloudmessaging.entity.rdbms.FCMRegistryEntity;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
