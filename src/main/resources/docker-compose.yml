@@ -1,0 +1,21 @@
+app-web:
+  build: ./docker/springApp
+  ports:
+    - "9091:9090"
+  links:
+    - app-db
+
+app-db:
+  build: ./docker/mongoDB
+  ports:
+    - "27017:27017"
+  expose:
+    - "27017"
+  volumes_from:
+    - app-db-data
+
+app-db-data:
+  image: cogniteev/echo
+  command: echo 'Data Container for mongo'
+  volumes:
+    - /data/db
