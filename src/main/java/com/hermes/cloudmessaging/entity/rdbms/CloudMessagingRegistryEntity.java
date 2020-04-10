@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(indexes = {@Index(columnList = "CLOUD_MESSAGING_ID")})
-public class FCMRegistryEntity extends BaseEntity {
+public class CloudMessagingRegistryEntity extends BaseEntity {
 
 	@Builder
-	public FCMRegistryEntity(String deviceName, String osVersion, String appVersion, String cloudMessagingId) {
+	public CloudMessagingRegistryEntity(String deviceName, String osVersion, String appVersion, String cloudMessagingId) {
 		this.deviceName = deviceName;
 		this.osVersion = osVersion;
 		this.appVersion = appVersion;

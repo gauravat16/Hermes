@@ -2,7 +2,7 @@ package com.hermes.cloudmessaging.service.impl;
 
 import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
 import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
-import com.hermes.cloudmessaging.entity.rdbms.FCMRegistryEntity;
+import com.hermes.cloudmessaging.entity.rdbms.CloudMessagingRegistryEntity;
 import com.hermes.cloudmessaging.jpa.criteria.constants.Appender;
 import com.hermes.cloudmessaging.jpa.criteria.constants.Operation;
 import com.hermes.cloudmessaging.jpa.criteria.dto.SearchCriteria;
@@ -17,15 +17,15 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service("FCMDbService")
-public class CloudMsgRegistrationDBService implements DbCRUDService<FCMRegistryEntity, CloudMessageRequest, FCMRegistrationResponse, Long> {
+@Service("CloudMsgRegistrationDBService")
+public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagingRegistryEntity, CloudMessageRequest, FCMRegistrationResponse, Long> {
 
     @Autowired
     private FCMRegistryRepository fcmRegistryRepository;
 
     @Override
-    public FCMRegistryEntity mapRequestToEntity(CloudMessageRequest request) {
-        return FCMRegistryEntity.builder()
+    public CloudMessagingRegistryEntity mapRequestToEntity(CloudMessageRequest request) {
+        return CloudMessagingRegistryEntity.builder()
                 .appVersion(request.getAppVersion())
                 .deviceName(request.getDeviceName())
                 .cloudMessagingId(request.getCloudMessageId())
@@ -34,7 +34,7 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<FCMRegistryE
     }
 
     @Override
-    public FCMRegistrationResponse mapEntityToResponse(FCMRegistryEntity entity) {
+    public FCMRegistrationResponse mapEntityToResponse(CloudMessagingRegistryEntity entity) {
         return FCMRegistrationResponse.builder()
                 .appVersion(entity.getAppVersion())
                 .deviceName(entity.getDeviceName())
@@ -67,18 +67,18 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<FCMRegistryE
     @Override
     public FCMRegistrationResponse update(CloudMessageRequest cloudMessageRequest) {
         Assert.notNull(cloudMessageRequest.getCloudMessageId(), "No fcm id present to update");
-        FCMRegistryEntity fcmRegistryEntity = fcmRegistryRepository.findByCloudMessagingId(cloudMessageRequest.getCloudMessageId());
-        Assert.notNull(fcmRegistryEntity, "No data found for " + cloudMessageRequest.getCloudMessageId());
+        CloudMessagingRegistryEntity cloudMessagingRegistryEntity = fcmRegistryRepository.findByCloudMessagingId(cloudMessageRequest.getCloudMessageId());
+        Assert.notNull(cloudMessagingRegistryEntity, "No data found for " + cloudMessageRequest.getCloudMessageId());
 
-        BeanUtils.copyProperties(cloudMessageRequest, fcmRegistryEntity);
-        return mapEntityToResponse(fcmRegistryRepository.save(fcmRegistryEntity));
+        BeanUtils.copyProperties(cloudMessageRequest, cloudMessagingRegistryEntity);
+        return mapEntityToResponse(fcmRegistryRepository.save(cloudMessagingRegistryEntity));
     }
 
     @Override
     public void delete(CloudMessageRequest cloudMessageRequest) {
         Assert.notNull(cloudMessageRequest, "No req present to delete");
-        List<FCMRegistryEntity> fcmRegistryEntityList = findAllEntities(cloudMessageRequest);
-        fcmRegistryEntityList.forEach(fcmRegistryEntity -> fcmRegistryRepository.delete(fcmRegistryEntity));
+        List<CloudMessagingRegistryEntity> cloudMessagingRegistryEntityList = findAllEntities(cloudMessageRequest);
+        cloudMessagingRegistryEntityList.forEach(cloudMessagingRegistryEntity -> fcmRegistryRepository.delete(cloudMessagingRegistryEntity));
     }
 
     @Override
@@ -87,8 +87,8 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<FCMRegistryE
     }
 
 
-    private List<FCMRegistryEntity> findAllEntities(CloudMessageRequest cloudMessageRequest) {
-        CustomSpecification<FCMRegistryEntity> customSpecification = new CustomSpecification<>();
+    private List<CloudMessagingRegistryEntity> findAllEntities(CloudMessageRequest cloudMessageRequest) {
+        CustomSpecification<CloudMessagingRegistryEntity> customSpecification = new CustomSpecification<>();
 
         if (null != cloudMessageRequest.getCloudMessageId()) {
             customSpecification.add(SearchCriteria.of("cloudMessagingId", cloudMessageRequest.getCloudMessageId(), Operation.EQUALS, Appender.AND));

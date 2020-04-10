@@ -17,21 +17,21 @@ import java.util.List;
 @Component
 public class CustomSpecification<T> implements Specification<T> {
 
-    private List<SearchCriteria> searchCriterias;
+    private List<SearchCriteria> searchCriterion;
 
     public CustomSpecification() {
-        this.searchCriterias = new ArrayList<>();
+        this.searchCriterion = new ArrayList<>();
     }
 
     public List<SearchCriteria> add(SearchCriteria searchCriteria) {
-        searchCriterias.add(searchCriteria);
-        return searchCriterias;
+        searchCriterion.add(searchCriteria);
+        return searchCriterion;
     }
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Predicate predicate = null;
-        for (SearchCriteria criteria : searchCriterias) {
+        for (SearchCriteria criteria : searchCriterion) {
             predicate = buildCriteria(root, criteriaBuilder, criteria);
         }
         return predicate;

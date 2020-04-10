@@ -1,21 +1,29 @@
-app-web:
-  build: ./docker/springApp
-  ports:
-    - "9091:9090"
-  links:
-    - app-db
+version: '3.7'
+services:
+  mongodb_container:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'hermes'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
 
-app-db:
-  build: ./docker/mongoDB
-  ports:
-    - "27017:27017"
-  expose:
-    - "27017"
-  volumes_from:
-    - app-db-data
-
-app-db-data:
-  image: cogniteev/echo
-  command: echo 'Data Container for mongo'
-  volumes:
-    - /data/db
+volumes:
+  mongodb_data_container:
+  my-db:

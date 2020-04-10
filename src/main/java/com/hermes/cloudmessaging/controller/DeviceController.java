@@ -2,8 +2,9 @@ package com.hermes.cloudmessaging.controller;
 
 import com.hermes.cloudmessaging.dto.response.BaseResponseDto;
 import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
-import com.hermes.cloudmessaging.entity.rdbms.FCMRegistryEntity;
+import com.hermes.cloudmessaging.entity.rdbms.CloudMessagingRegistryEntity;
 import com.hermes.cloudmessaging.service.DbCRUDService;
+import com.hermes.cloudmessaging.service.impl.CloudMsgRegistrationDBService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,9 +22,9 @@ import java.util.List;
 @RequestMapping("device")
 public class DeviceController {
 
-    private final DbCRUDService<FCMRegistryEntity, CloudMessageRequest, FCMRegistrationResponse, Long> dbCRUDService;
+    private final CloudMsgRegistrationDBService dbCRUDService;
 
-    public DeviceController(@Qualifier("FCMDbService") DbCRUDService<FCMRegistryEntity, CloudMessageRequest, FCMRegistrationResponse, Long> dbCRUDService) {
+    public DeviceController(CloudMsgRegistrationDBService dbCRUDService) {
         this.dbCRUDService = dbCRUDService;
     }
 
