@@ -1,12 +1,8 @@
 package com.hermes.cloudmessaging.service.impl;
 
-import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
 import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
-import com.hermes.cloudmessaging.entity.rdbms.CloudMessagingRegistryEntity;
-import com.hermes.cloudmessaging.jpa.criteria.constants.Appender;
-import com.hermes.cloudmessaging.jpa.criteria.constants.Operation;
-import com.hermes.cloudmessaging.jpa.criteria.dto.SearchCriteria;
-import com.hermes.cloudmessaging.jpa.criteria.services.CustomSpecification;
+import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
+import com.hermes.cloudmessaging.entity.mongo.CloudMessagingRegistryEntity;
 import com.hermes.cloudmessaging.repository.FCMRegistryRepository;
 import com.hermes.cloudmessaging.service.DbCRUDService;
 import org.springframework.beans.BeanUtils;
@@ -74,42 +70,26 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagi
         return mapEntityToResponse(fcmRegistryRepository.save(cloudMessagingRegistryEntity));
     }
 
+//    @Override
+//    public void delete(CloudMessageRequest cloudMessageRequest) {
+//        Assert.notNull(cloudMessageRequest, "No req present to delete");
+//        List<CloudMessagingRegistryEntity> cloudMessagingRegistryEntityList = findAllEntities(cloudMessageRequest);
+//        cloudMessagingRegistryEntityList.forEach(cloudMessagingRegistryEntity -> fcmRegistryRepository.delete(cloudMessagingRegistryEntity));
+//    }
+
+//    @Override
+//    public List<FCMRegistrationResponse> find(CloudMessageRequest cloudMessageRequest) {
+//        return findAllEntities(cloudMessageRequest).stream().map(this::mapEntityToResponse).collect(Collectors.toList());
+//    }
+
+
     @Override
     public void delete(CloudMessageRequest cloudMessageRequest) {
-        Assert.notNull(cloudMessageRequest, "No req present to delete");
-        List<CloudMessagingRegistryEntity> cloudMessagingRegistryEntityList = findAllEntities(cloudMessageRequest);
-        cloudMessagingRegistryEntityList.forEach(cloudMessagingRegistryEntity -> fcmRegistryRepository.delete(cloudMessagingRegistryEntity));
+
     }
 
     @Override
     public List<FCMRegistrationResponse> find(CloudMessageRequest cloudMessageRequest) {
-        return findAllEntities(cloudMessageRequest).stream().map(this::mapEntityToResponse).collect(Collectors.toList());
+        return null;
     }
-
-
-    private List<CloudMessagingRegistryEntity> findAllEntities(CloudMessageRequest cloudMessageRequest) {
-        CustomSpecification<CloudMessagingRegistryEntity> customSpecification = new CustomSpecification<>();
-
-        if (null != cloudMessageRequest.getCloudMessageId()) {
-            customSpecification.add(SearchCriteria.of("cloudMessagingId", cloudMessageRequest.getCloudMessageId(), Operation.EQUALS, Appender.AND));
-        }
-
-        if (null != cloudMessageRequest.getOsVersion()) {
-            customSpecification.add(SearchCriteria.of("osVersion", cloudMessageRequest.getOsVersion(), Operation.EQUALS, Appender.AND));
-        }
-
-
-        if (null != cloudMessageRequest.getDeviceName()) {
-            customSpecification.add(SearchCriteria.of("deviceName", cloudMessageRequest.getDeviceName(), Operation.LIKE, Appender.AND));
-        }
-
-
-        if (null != cloudMessageRequest.getAppVersion()) {
-            customSpecification.add(SearchCriteria.of("appVersion", cloudMessageRequest.getAppVersion(), Operation.EQUALS, Appender.AND));
-        }
-
-        return fcmRegistryRepository.findAll(customSpecification);
-    }
-
-
 }

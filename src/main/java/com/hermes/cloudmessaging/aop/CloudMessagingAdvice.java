@@ -29,7 +29,6 @@ public class CloudMessagingAdvice {
             Object response = joinPoint.proceed();
 
             applicationEventPublisher.publishEvent(new NewMessageResponseEvent(this, MessageEntity.builder()
-                    .id(UUID.randomUUID().toString())
                     .cloudMessageResponse(response)
                     .cloudMessage(args[0])
                     .build()));

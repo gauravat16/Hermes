@@ -2,12 +2,9 @@ package com.hermes.cloudmessaging.controller;
 
 import com.hermes.cloudmessaging.dto.response.BaseResponseDto;
 import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
-import com.hermes.cloudmessaging.entity.rdbms.CloudMessagingRegistryEntity;
-import com.hermes.cloudmessaging.service.DbCRUDService;
 import com.hermes.cloudmessaging.service.impl.CloudMsgRegistrationDBService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;

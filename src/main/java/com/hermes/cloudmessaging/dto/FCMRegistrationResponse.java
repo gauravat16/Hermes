@@ -2,23 +2,20 @@ package com.hermes.cloudmessaging.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import org.bson.types.ObjectId;
 
 import java.util.Date;
 
+@Builder
 @Data
 public class FCMRegistrationResponse {
 
-	@Builder
-	public FCMRegistrationResponse(long id, Date createdAt, String deviceName, String osVersion, String appVersion, String cloudMessagingId) {
-		this.deviceName = deviceName;
-		this.osVersion = osVersion;
-		this.appVersion = appVersion;
-		this.cloudMessagingId = cloudMessagingId;
-	}
 
-	private String deviceName;
-	private String osVersion;
-	private String appVersion;
-	private String cloudMessagingId;
+    private String deviceName;
+    private String osVersion;
+    private String appVersion;
+    private String cloudMessagingId;
+    private String id;
+    private Date createdAt;
 
 }
