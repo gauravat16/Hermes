@@ -25,7 +25,7 @@ public class GraphQLProvider implements GraphQLQueryResolver {
     }
 
     public List<CloudMessagingRegistryEntity> getByQuery(String id, String deviceName, String osVersion, String appVersion, String cloudMessagingId) {
-        CloudMessagingRegistryEntity entity = new CloudMessagingRegistryEntity(deviceName, osVersion, appVersion, cloudMessagingId);
+        CloudMessagingRegistryEntity entity = new CloudMessagingRegistryEntity(deviceName, osVersion, appVersion, cloudMessagingId, null);
         entity.setId(id);
         return fcmRegistryRepository.findAll(Example.of(entity, ExampleMatcher.matchingAny()));
     }

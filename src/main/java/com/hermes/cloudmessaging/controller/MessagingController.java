@@ -29,7 +29,6 @@ public class MessagingController {
     @PostMapping("/new-message")
     public List<FCMResponse> sendMessage(@RequestBody SendMsgRequest msgRequest) {
 
-
         return dbCRUDService.find(msgRequest.getCloudMessageRequest()).stream().map(e -> {
             msgRequest.getMessage().setTo(e.getCloudMessagingId());
             return cloudMessenger.sendMessageToUser(msgRequest.getMessage());

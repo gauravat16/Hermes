@@ -26,6 +26,7 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagi
                 .deviceName(request.getDeviceName())
                 .cloudMessagingId(request.getCloudMessageId())
                 .osVersion(request.getOsVersion())
+                .metadata(request.getMetadata())
                 .build();
     }
 
@@ -38,6 +39,7 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagi
                 .osVersion(entity.getOsVersion())
                 .id(entity.getId())
                 .createdAt(entity.getCreatedAt())
+                .metadata(entity.getMetadata())
                 .build();
     }
 

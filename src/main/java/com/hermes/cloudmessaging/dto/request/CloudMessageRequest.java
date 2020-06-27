@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CloudMessageRequest {
 
-	private String deviceName;
-	private String osVersion;
-	private String appVersion;
-	private String cloudMessageId;
+    private String deviceName;
+    private String osVersion;
+    private String appVersion;
+    private String cloudMessageId;
+    private String metadata;
 
 }
