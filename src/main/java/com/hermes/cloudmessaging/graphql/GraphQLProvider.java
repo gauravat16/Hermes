@@ -1,33 +1,45 @@
 package com.hermes.cloudmessaging.graphql;
 
+import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import com.hermes.cloudmessaging.entity.mongo.CloudMessagingRegistryEntity;
-import com.hermes.cloudmessaging.repository.FCMRegistryRepository;
+import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
+import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
+import com.hermes.cloudmessaging.service.impl.CloudMsgRegistrationDBService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class GraphQLProvider implements GraphQLQueryResolver {
+public class GraphQLProvider implements GraphQLQueryResolver, GraphQLMutationResolver {
+
 
     @Autowired
-    private FCMRegistryRepository fcmRegistryRepository;
+    private CloudMsgRegistrationDBService cloudMsgRegistrationDBService;
 
-    public CloudMessagingRegistryEntity getDataById(long id) {
-        return fcmRegistryRepository.findById(id).get();
+    public List<FCMRegistrationResponse> getByQuery(String id, String deviceName, String osVersion, String appVersion, String cloudMessagingId) {
+        return cloudMsgRegistrationDBService.find(paramsToRequest(deviceName, osVersion, appVersion, cloudMessagingId, null));
     }
 
-    public CloudMessagingRegistryEntity getDataByOsVersion(String osVersion) {
-        return fcmRegistryRepository.findByOsVersion(osVersion);
+    public FCMRegistrationResponse addDeviceData(String deviceName, String osVersion, String appVersion, String cloudMessagingId, String metadata) {
+        return cloudMsgRegistrationDBService.create(paramsToRequest(deviceName, osVersion, appVersion, cloudMessagingId, metadata));
     }
 
-    public List<CloudMessagingRegistryEntity> getByQuery(String id, String deviceName, String osVersion, String appVersion, String cloudMessagingId) {
-        CloudMessagingRegistryEntity entity = new CloudMessagingRegistryEntity(deviceName, osVersion, appVersion, cloudMessagingId, null);
-        entity.setId(id);
-        return fcmRegistryRepository.findAll(Example.of(entity, ExampleMatcher.matchingAny()));
+    public List<FCMRegistrationResponse> deleteDeviceData(String deviceName, String osVersion, String appVersion, String cloudMessagingId, String metadata) {
+        return cloudMsgRegistrationDBService.delete(paramsToRequest(deviceName, osVersion, appVersion, cloudMessagingId, metadata));
+    }
+
+    public FCMRegistrationResponse updateDeviceData(String deviceName, String osVersion, String appVersion, String cloudMessagingId, String metadata) {
+        return cloudMsgRegistrationDBService.update(paramsToRequest(deviceName, osVersion, appVersion, cloudMessagingId, metadata));
+    }
+
+    private CloudMessageRequest paramsToRequest(String deviceName, String osVersion, String appVersion, String cloudMessagingId, String metadata) {
+        return CloudMessageRequest.builder().appVersion(appVersion)
+                .cloudMessageId(cloudMessagingId)
+                .deviceName(deviceName)
+                .metadata(metadata)
+                .osVersion(osVersion)
+                .build();
     }
 
 

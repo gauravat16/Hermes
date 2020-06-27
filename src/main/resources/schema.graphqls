@@ -1,5 +1,15 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
 type Query {
-  getByQuery(id: ID, deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String): [Registry]
+    getByQuery(id: ID, deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String): [Registry]
+}
+
+type Mutation{
+    addDeviceData(deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String, metadata: String): Registry
+    deleteDeviceData(deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String, metadata: String): [Registry]
+    updateDeviceData(deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String, metadata: String): Registry
 }
 
 type Registry {
@@ -9,4 +19,5 @@ type Registry {
     appVersion: String
     cloudMessagingId: String
     createdAt: String
+    metadata: String
 }

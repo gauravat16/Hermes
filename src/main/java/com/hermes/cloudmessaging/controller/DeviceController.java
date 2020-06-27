@@ -1,13 +1,12 @@
 package com.hermes.cloudmessaging.controller;
 
-import com.hermes.cloudmessaging.dto.response.BaseResponseDto;
 import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
+import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
+import com.hermes.cloudmessaging.dto.response.BaseResponseDto;
 import com.hermes.cloudmessaging.service.impl.CloudMsgRegistrationDBService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
-import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
 
 import java.util.List;
 
@@ -17,6 +16,7 @@ import java.util.List;
 @Api("")
 @RestController
 @RequestMapping("device")
+@Deprecated //As GraphQL already supports this
 public class DeviceController {
 
     private final CloudMsgRegistrationDBService dbCRUDService;
