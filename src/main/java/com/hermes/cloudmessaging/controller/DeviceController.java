@@ -3,9 +3,12 @@ package com.hermes.cloudmessaging.controller;
 import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
 import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
 import com.hermes.cloudmessaging.dto.response.BaseResponseDto;
+import com.hermes.cloudmessaging.service.QueueService;
 import com.hermes.cloudmessaging.service.impl.CloudMsgRegistrationDBService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,13 +19,16 @@ import java.util.List;
 @Api("")
 @RestController
 @RequestMapping("device")
-@Deprecated //As GraphQL already supports this
 public class DeviceController {
 
     private final CloudMsgRegistrationDBService dbCRUDService;
 
-    public DeviceController(CloudMsgRegistrationDBService dbCRUDService) {
+    private QueueService<CloudMessageRequest> queueService;
+
+    public DeviceController(CloudMsgRegistrationDBService dbCRUDService, @Qualifier("java-cloudMessageRequest")
+            QueueService<CloudMessageRequest> queueService) {
         this.dbCRUDService = dbCRUDService;
+        this.queueService = queueService;
     }
 
     @ApiOperation("Record new fcm request")
@@ -50,5 +56,13 @@ public class DeviceController {
     public BaseResponseDto<List<FCMRegistrationResponse>> findData(@RequestBody CloudMessageRequest registrationRequest) {
         return new BaseResponseDto<>(dbCRUDService.find(registrationRequest));
     }
+
+    @ApiOperation("Send heart beat")
+    @PostMapping("heart-beat")
+    public BaseResponseDto<String> heartBeat(@RequestBody CloudMessageRequest registrationRequest) {
+        queueService.enqueue(registrationRequest);
+        return new BaseResponseDto<>("Received");
+    }
+
 
 }

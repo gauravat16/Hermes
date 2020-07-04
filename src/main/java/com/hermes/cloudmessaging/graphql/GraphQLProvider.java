@@ -4,8 +4,10 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
 import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
+import com.hermes.cloudmessaging.service.QueueService;
 import com.hermes.cloudmessaging.service.impl.CloudMsgRegistrationDBService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
