@@ -28,7 +28,7 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagi
     private FCMRegistryRepository fcmRegistryRepository;
 
     @Autowired
-    @Qualifier("java-cloudMessageRequest")
+    @Qualifier("java-CloudMessageRequest")
     private QueueService<CloudMessageRequest> queueService;
 
     @Override

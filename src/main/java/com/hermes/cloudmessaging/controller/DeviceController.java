@@ -7,7 +7,6 @@ import com.hermes.cloudmessaging.service.QueueService;
 import com.hermes.cloudmessaging.service.impl.CloudMsgRegistrationDBService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +22,11 @@ public class DeviceController {
 
     private final CloudMsgRegistrationDBService dbCRUDService;
 
-    private QueueService<CloudMessageRequest> queueService;
 
-    public DeviceController(CloudMsgRegistrationDBService dbCRUDService, @Qualifier("java-cloudMessageRequest")
-            QueueService<CloudMessageRequest> queueService) {
+    private final QueueService<CloudMessageRequest> queueService;
+
+    public DeviceController(CloudMsgRegistrationDBService dbCRUDService,
+                            @Qualifier("java-CloudMessageRequest") QueueService<CloudMessageRequest> queueService) {
         this.dbCRUDService = dbCRUDService;
         this.queueService = queueService;
     }

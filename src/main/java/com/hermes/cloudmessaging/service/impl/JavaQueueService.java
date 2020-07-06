@@ -1,21 +1,18 @@
 package com.hermes.cloudmessaging.service.impl;
 
-import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
 import com.hermes.cloudmessaging.exception.DequeueException;
 import com.hermes.cloudmessaging.exception.EnqueueException;
 import com.hermes.cloudmessaging.service.QueueService;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
-@Service(value = "java-cloudMessageRequest")
-public class JavaQueueService implements QueueService<CloudMessageRequest> {
+public class JavaQueueService<T> implements QueueService<T> {
 
-    private BlockingQueue<CloudMessageRequest> queue;
+    private BlockingQueue<T> queue;
 
     @PostConstruct
     private void setQueue() {
@@ -23,14 +20,14 @@ public class JavaQueueService implements QueueService<CloudMessageRequest> {
     }
 
     @Override
-    public void enqueue(CloudMessageRequest data) throws EnqueueException {
+    public void enqueue(T data) throws EnqueueException {
         queue.offer(data);
     }
 
     @Override
-    public CloudMessageRequest dequeue() throws DequeueException {
+    public T dequeue() throws DequeueException {
         try {
-            CloudMessageRequest cloudMessageRequest = queue.poll(2, TimeUnit.SECONDS);
+            T cloudMessageRequest = queue.poll(2, TimeUnit.SECONDS);
             if (null == cloudMessageRequest) throw new DequeueException("Data not found!", HttpStatus.NO_CONTENT);
 
             return cloudMessageRequest;
@@ -38,6 +35,5 @@ public class JavaQueueService implements QueueService<CloudMessageRequest> {
             throw new DequeueException("Timeout!", HttpStatus.REQUEST_TIMEOUT);
         }
     }
-
 
 }
