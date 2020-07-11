@@ -2,6 +2,9 @@ package com.hermes.cloudmessaging.jpa.criteria.constants;
 
 import lombok.Getter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 public enum Operation {
 
@@ -12,10 +15,23 @@ public enum Operation {
     LESS_THAN_EQUAL_TO("<="),
     LIKE("%%");
 
+    private static Map<String, Operation> stringOperationMap;
+
     private String value;
+
+    static {
+        stringOperationMap = new HashMap<>();
+        for (Operation operation : values()) {
+            stringOperationMap.put(operation.getValue(), operation);
+        }
+    }
 
     Operation(String value) {
         this.value = value;
+    }
+
+    public static Operation getOperationForString(String ops) {
+        return stringOperationMap.get(ops);
     }
 
 }

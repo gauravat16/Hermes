@@ -5,13 +5,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface FCMRegistryRepository extends MongoRepository<CloudMessagingRegistryEntity, Long> {
+public interface FCMRegistryRepository extends MongoRepository<CloudMessagingRegistryEntity, Long>, CustomMongoRepository {
 
     List<CloudMessagingRegistryEntity> findAllByCloudMessagingId(String fcmId);
 
     CloudMessagingRegistryEntity findByCloudMessagingId(String fcmId);
 
     CloudMessagingRegistryEntity findByOsVersion(String osVersion);
-
-
 }

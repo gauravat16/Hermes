@@ -3,7 +3,7 @@ schema {
     mutation: Mutation
 }
 type Query {
-    getByQuery(id: ID, deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String): [Registry]
+    getByQuery(id: ID, deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String, metadata: String): [Registry]
 }
 
 type Mutation{

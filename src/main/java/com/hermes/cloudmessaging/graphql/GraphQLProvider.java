@@ -19,8 +19,8 @@ public class GraphQLProvider implements GraphQLQueryResolver, GraphQLMutationRes
     @Autowired
     private CloudMsgRegistrationDBService cloudMsgRegistrationDBService;
 
-    public List<FCMRegistrationResponse> getByQuery(String id, String deviceName, String osVersion, String appVersion, String cloudMessagingId) {
-        return cloudMsgRegistrationDBService.find(paramsToRequest(deviceName, osVersion, appVersion, cloudMessagingId, null));
+    public List<FCMRegistrationResponse> getByQuery(String id, String deviceName, String osVersion, String appVersion, String cloudMessagingId, String metadata) {
+        return cloudMsgRegistrationDBService.find(paramsToRequest(deviceName, osVersion, appVersion, cloudMessagingId, metadata));
     }
 
     public FCMRegistrationResponse addDeviceData(String deviceName, String osVersion, String appVersion, String cloudMessagingId, String metadata) {

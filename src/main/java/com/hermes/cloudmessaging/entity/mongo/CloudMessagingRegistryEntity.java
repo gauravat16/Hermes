@@ -1,5 +1,6 @@
 package com.hermes.cloudmessaging.entity.mongo;
 
+import com.mongodb.DBObject;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class CloudMessagingRegistryEntity extends BaseEntity {
 
     @Builder
-    public CloudMessagingRegistryEntity(String deviceName, String osVersion, String appVersion, String cloudMessagingId, String metadata) {
+    public CloudMessagingRegistryEntity(String deviceName, String osVersion, String appVersion, String cloudMessagingId, DBObject metadata) {
         this.deviceName = deviceName;
         this.osVersion = osVersion;
         this.appVersion = appVersion;
@@ -35,5 +36,5 @@ public class CloudMessagingRegistryEntity extends BaseEntity {
     /**
      * This data is in JSON format
      */
-    private String metadata;
+    private DBObject metadata;
 }

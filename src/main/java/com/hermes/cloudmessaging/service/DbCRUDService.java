@@ -1,5 +1,7 @@
 package com.hermes.cloudmessaging.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.util.List;
 
 /**
