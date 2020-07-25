@@ -2,11 +2,11 @@ package com.hermes.cloudmessaging.service.impl;
 
 import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
 import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
+import com.hermes.cloudmessaging.dto.request.QueueRequest;
 import com.hermes.cloudmessaging.entity.mongo.CloudMessagingRegistryEntity;
-import com.hermes.cloudmessaging.exception.DequeueException;
-import com.hermes.cloudmessaging.jpa.criteria.MongoQueryGenerator;
 import com.hermes.cloudmessaging.repository.FCMRegistryRepository;
 import com.hermes.cloudmessaging.service.DbCRUDService;
+import com.hermes.cloudmessaging.service.QueueMessageHandler;
 import com.hermes.cloudmessaging.service.QueueService;
 import com.hermes.cloudmessaging.utils.BeanUtils;
 import com.mongodb.BasicDBObject;
@@ -14,7 +14,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -23,14 +22,14 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @Service("CloudMsgRegistrationDBService")
-public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagingRegistryEntity, CloudMessageRequest, FCMRegistrationResponse, Long> {
+public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagingRegistryEntity, CloudMessageRequest, FCMRegistrationResponse, Long>,
+        QueueMessageHandler {
 
     @Autowired
     private FCMRegistryRepository fcmRegistryRepository;
 
     @Autowired
-    @Qualifier("java-CloudMessageRequest")
-    private QueueService<CloudMessageRequest> queueService;
+    private QueueService<QueueRequest> queueService;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -117,12 +116,13 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagi
         return findAllEntities(cloudMessageRequest).stream().map(this::mapEntityToResponse).collect(Collectors.toList());
     }
 
-    @Scheduled(cron = "*/5 * * * * *")
-    public void asyncCronJob() {
-        try {
-            create(queueService.dequeue());
-        } catch (DequeueException e) {
-            log.debug("Dequeue Failed", e);
-        }
+    @Override
+    public void handleRequest(Object request) {
+        create((CloudMessageRequest) request);
+    }
+
+    @Override
+    public QueueRequest.Type getQueueRequestType() {
+        return QueueRequest.Type.HEART_BEAT;
     }
 }

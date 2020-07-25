@@ -2,6 +2,7 @@ package com.hermes.cloudmessaging.controller;
 
 import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
 import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
+import com.hermes.cloudmessaging.dto.request.QueueRequest;
 import com.hermes.cloudmessaging.dto.response.BaseResponseDto;
 import com.hermes.cloudmessaging.service.QueueService;
 import com.hermes.cloudmessaging.service.impl.CloudMsgRegistrationDBService;
@@ -23,10 +24,10 @@ public class DeviceController {
     private final CloudMsgRegistrationDBService dbCRUDService;
 
 
-    private final QueueService<CloudMessageRequest> queueService;
+    private final QueueService<QueueRequest> queueService;
 
     public DeviceController(CloudMsgRegistrationDBService dbCRUDService,
-                            @Qualifier("java-CloudMessageRequest") QueueService<CloudMessageRequest> queueService) {
+                            QueueService<QueueRequest> queueService) {
         this.dbCRUDService = dbCRUDService;
         this.queueService = queueService;
     }
@@ -60,7 +61,7 @@ public class DeviceController {
     @ApiOperation("Send heart beat")
     @PostMapping("heart-beat")
     public BaseResponseDto<String> heartBeat(@RequestBody CloudMessageRequest registrationRequest) {
-        queueService.enqueue(registrationRequest);
+        queueService.enqueue(new QueueRequest(QueueRequest.Type.HEART_BEAT, registrationRequest));
         return new BaseResponseDto<>("Received");
     }
 
