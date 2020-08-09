@@ -35,7 +35,7 @@ public class MongoQueryGenerator {
             parseQuery(strQuery).forEach(searchCriteria -> criteriaList.add(mapSearchCriteriaToCriteria(searchCriteria)));
         }
 
-        return query.addCriteria(new Criteria().andOperator(criteriaList.toArray(new Criteria[criteriaList.size()])));
+        return query.addCriteria(new Criteria().andOperator(criteriaList.toArray(new Criteria[0])));
     }
 
     /**
@@ -43,7 +43,7 @@ public class MongoQueryGenerator {
      * Expected format :
      * val1,=,23;val2,=,ABC;val3,<,22
      *
-     * @param query
+     * @param query sent by the user
      * @return List of {@link SearchCriteria}
      */
     private List<SearchCriteria> parseQuery(String query) {
@@ -80,7 +80,7 @@ public class MongoQueryGenerator {
 
         switch (searchCriteria.getOperation()) {
             case LIKE:
-                return Criteria.where(searchCriteria.getKey()).alike(Example.of(searchCriteria.getValue()));
+                return Criteria.where(searchCriteria.getKey()).regex((String) searchCriteria.getValue());
             case EQUALS:
                 return Criteria.where(searchCriteria.getKey()).is(searchCriteria.getValue());
             case LESS_THAN:
