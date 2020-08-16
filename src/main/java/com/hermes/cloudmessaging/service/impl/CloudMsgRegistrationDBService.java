@@ -12,10 +12,10 @@ import com.hermes.cloudmessaging.utils.BeanUtils;
 import com.mongodb.BasicDBObject;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,10 +44,7 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagi
                 .cloudMessagingId(request.getCloudMessageId())
                 .osVersion(request.getOsVersion());
 
-
         builder.metadata(BasicDBObject.parse(request.getMetadata()));
-
-
         return builder.build();
 
     }
@@ -78,11 +75,10 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagi
 
     @Override
     public List<FCMRegistrationResponse> read(final CloudMessageRequest cloudMessageRequest) {
-        List<FCMRegistrationResponse> responses = fcmRegistryRepository.findAllByCloudMessagingId(cloudMessageRequest.getCloudMessageId()).
+        return findAllEntities(cloudMessageRequest).
                 stream()
                 .map(this::mapEntityToResponse)
                 .collect(Collectors.toList());
-        return responses;
     }
 
     @Override
@@ -92,6 +88,9 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagi
         Assert.notNull(cloudMessagingRegistryEntity, "No data found for " + cloudMessageRequest.getCloudMessageId());
 
         BeanUtils.copyNonNullProperties(cloudMessageRequest, cloudMessagingRegistryEntity);
+        if(!StringUtils.isEmpty(cloudMessageRequest.getMetadata())){
+            cloudMessagingRegistryEntity.setMetadata(BasicDBObject.parse(cloudMessageRequest.getMetadata()));
+        }
         return mapEntityToResponse(fcmRegistryRepository.save(cloudMessagingRegistryEntity));
     }
 

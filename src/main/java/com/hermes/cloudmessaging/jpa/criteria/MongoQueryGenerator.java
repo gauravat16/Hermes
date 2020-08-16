@@ -6,7 +6,6 @@ import com.hermes.cloudmessaging.jpa.criteria.dto.SearchCriteria;
 import com.hermes.cloudmessaging.utils.BeanUtils;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Example;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.util.Assert;
@@ -62,12 +61,9 @@ public class MongoQueryGenerator {
             Assert.notNull(operation, "Invalid operation  " + token);
 
             String value = elem[2];
-            SearchCriteria.ValueType valueType = SearchCriteria.ValueType.String;
-
-            if (value.startsWith("'") && value.endsWith("'")) {
-                value = value.substring(1, value.length() - 1);
-            } else {
-                valueType = SearchCriteria.ValueType.Double;
+            SearchCriteria.ValueType valueType = SearchCriteria.getSearchCriteriaForValue(value);
+            if (valueType == SearchCriteria.ValueType.String) {
+                value = value.substring(1, value.lastIndexOf("'"));
             }
 
             searchCriterias.add(SearchCriteria.of(elem[0], value, operation, Appender.AND, valueType));

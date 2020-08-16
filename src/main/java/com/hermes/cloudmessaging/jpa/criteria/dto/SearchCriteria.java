@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class SearchCriteria {
     public enum ValueType {
-        String, Long, Double;
+        String, Long, Double, Boolean;
     }
 
     private String key;
@@ -31,6 +31,8 @@ public class SearchCriteria {
 
     public Object getValue() {
         switch (valueType) {
+            case Boolean:
+                return value.equalsIgnoreCase("true");
             case Long:
                 return Long.parseLong(value);
             case Double:
@@ -38,6 +40,20 @@ public class SearchCriteria {
             default:
             case String:
                 return value;
+        }
+    }
+
+    public static ValueType getSearchCriteriaForValue(String value) {
+
+        if (value.startsWith("'") && value.endsWith("'")) {
+            return SearchCriteria.ValueType.String;
+        } else {
+            value = value.trim();
+            if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+                return SearchCriteria.ValueType.Boolean;
+            } else {
+                return SearchCriteria.ValueType.Double;
+            }
         }
     }
 }

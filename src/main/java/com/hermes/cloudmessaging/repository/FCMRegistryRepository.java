@@ -3,11 +3,7 @@ package com.hermes.cloudmessaging.repository;
 import com.hermes.cloudmessaging.entity.mongo.CloudMessagingRegistryEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.List;
-
-public interface FCMRegistryRepository extends MongoRepository<CloudMessagingRegistryEntity, Long>, CustomMongoRepository {
-
-    List<CloudMessagingRegistryEntity> findAllByCloudMessagingId(String fcmId);
+public interface FCMRegistryRepository extends MongoRepository<CloudMessagingRegistryEntity, String>, CustomMongoRepository {
 
     CloudMessagingRegistryEntity findByCloudMessagingId(String fcmId);
 
