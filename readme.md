@@ -2,7 +2,7 @@
 Hermes allows you to create a pipeline for metrics of you application. It can be iOS, Android or Desktop app.
 Data can be queried using a combination of GraphQL and Custom metadata query.
 
-#### Queries
+### Queries
 
 **Query**
 
