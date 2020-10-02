@@ -4,7 +4,9 @@ import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
 import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
 import com.hermes.cloudmessaging.dto.request.QueueRequest;
 import com.hermes.cloudmessaging.entity.mongo.CloudMessagingRegistryEntity;
+import com.hermes.cloudmessaging.repository.CustomMongoRepository;
 import com.hermes.cloudmessaging.repository.FCMRegistryRepository;
+import com.hermes.cloudmessaging.repository.impl.CustomCloudMessagingRepositoryImpl;
 import com.hermes.cloudmessaging.service.DbCRUDService;
 import com.hermes.cloudmessaging.service.QueueMessageHandler;
 import com.hermes.cloudmessaging.service.QueueService;
@@ -33,6 +35,9 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagi
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @Autowired
+    private CustomCloudMessagingRepositoryImpl customCloudMessagingRepository;
 
     @Override
     public CloudMessagingRegistryEntity mapRequestToEntity(CloudMessageRequest request) {
@@ -97,7 +102,7 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagi
     private List<CloudMessagingRegistryEntity> findAllEntities(CloudMessageRequest cloudMessageRequest) {
         String metadata = cloudMessageRequest.getMetadata();
         cloudMessageRequest.setMetadata(null); //Set it null so that query doesn't fail.
-        return fcmRegistryRepository.query(cloudMessageRequest, metadata);
+        return customCloudMessagingRepository.query(cloudMessageRequest, metadata);
     }
 
     @Override
