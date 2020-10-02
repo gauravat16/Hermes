@@ -11,4 +11,5 @@ public class WebServiceConfig {
 
     private String googleFCMUrl;
     private String googleFcmAuth;
+    private String currentAppUrl;
 }
