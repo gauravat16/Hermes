@@ -6,7 +6,7 @@ eg - Send this msg to all the users who are using dark mode and have app version
 
 Data can be queried using a combination of GraphQL and Custom metadata query.
 
-####Queries
+### Queries
 
 **Query**
 
@@ -32,7 +32,7 @@ Data can be queried using a combination of GraphQL and Custom metadata query.
   }
 ````
 
-####Metadata Query
+#### Metadata Query
 
 **Structure**
 
