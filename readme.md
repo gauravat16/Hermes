@@ -1,5 +1,9 @@
 #Hermes
-Hermes allows you to create a pipeline for metrics of you application. It can be iOS, Android or Desktop app.
+Hermes allows you to create a pipeline for sending push notifications to your app's users depending on 
+the parameters you push to hermes.
+
+eg - Send this msg to all the users who are using dark mode and have app version 2.1.1
+
 Data can be queried using a combination of GraphQL and Custom metadata query.
 
 ####Queries
