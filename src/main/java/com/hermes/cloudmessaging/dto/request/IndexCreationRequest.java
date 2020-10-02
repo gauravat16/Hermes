@@ -9,16 +9,21 @@ import java.util.List;
 @NoArgsConstructor
 public class IndexCreationRequest {
 
+    public enum IndexType {
+        SINGLE, COMPOUND, TEXT
+    }
+
     public enum Sort {
-        ASC, DESC
+        ASC, DESC, VOID
     }
 
     @Data
     @NoArgsConstructor
     public static class Pair {
-        private List<String> a;
-        private Sort b;
+        private List<String> elementNames;
+        private Sort direction;
     }
 
-    List<Pair> pairs;
+    private List<Pair> pairs;
+    private IndexType indexType;
 }
