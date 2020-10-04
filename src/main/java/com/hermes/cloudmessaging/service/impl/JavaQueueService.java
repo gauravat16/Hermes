@@ -45,7 +45,7 @@ public class JavaQueueService<T extends QueueRequest> implements QueueService<T>
     }
 
     @Override
-    @Scheduled(cron = "*/5 * * * * *")
+    @Scheduled(fixedRate = 10000)
     public Object dequeue() throws DequeueException {
         try {
             T request = queue.poll(2, TimeUnit.SECONDS);

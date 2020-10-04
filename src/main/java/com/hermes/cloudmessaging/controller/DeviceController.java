@@ -8,6 +8,7 @@ import com.hermes.cloudmessaging.service.QueueService;
 import com.hermes.cloudmessaging.service.impl.CloudMsgRegistrationDBService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @Api("")
 @RestController
 @RequestMapping("device")
+@Log4j2
 public class DeviceController {
 
     private final CloudMsgRegistrationDBService dbCRUDService;
@@ -61,6 +63,7 @@ public class DeviceController {
     @ApiOperation("Send heart beat")
     @PostMapping("heart-beat")
     public BaseResponseDto<String> heartBeat(@RequestBody CloudMessageRequest registrationRequest) {
+        log.debug("Request for heartbeat {}", registrationRequest);
         queueService.enqueue(new QueueRequest(QueueRequest.Type.HEART_BEAT, registrationRequest));
         return new BaseResponseDto<>("Received");
     }
