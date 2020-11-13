@@ -5,6 +5,7 @@ import com.hermes.cloudmessaging.exception.DequeueException;
 import com.hermes.cloudmessaging.exception.EnqueueException;
 import com.hermes.cloudmessaging.service.QueueMessageHandler;
 import com.hermes.cloudmessaging.service.QueueService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class JavaQueueService<T extends QueueRequest> implements QueueService<T> {
 
@@ -47,6 +49,7 @@ public class JavaQueueService<T extends QueueRequest> implements QueueService<T>
     @Override
     @Scheduled(cron = "*/5 * * * * *")
     public Object dequeue() throws DequeueException {
+        if (queue.size() == 0) throw new DequeueException("Queue is empty", HttpStatus.NO_CONTENT, true);
         try {
             T request = queue.poll(2, TimeUnit.SECONDS);
             if (null == request || request.getType() == null || request.getRequest() == null)
@@ -61,7 +64,11 @@ public class JavaQueueService<T extends QueueRequest> implements QueueService<T>
             return request.getRequest();
 
         } catch (InterruptedException e) {
+            log.debug("Exception faced when dequeue-ing", e);
             throw new DequeueException("Timeout!", HttpStatus.REQUEST_TIMEOUT, true);
+        } catch (Exception e) {
+            log.debug("Exception faced when dequeue-ing", e);
+            throw new DequeueException("Exception faced when dequeue-ing!", HttpStatus.INTERNAL_SERVER_ERROR, true);
         }
     }
 

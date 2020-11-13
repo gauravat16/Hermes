@@ -21,7 +21,7 @@ public class HerokuHack {
         this.webServiceConfig = webServiceConfig;
     }
 
-//    @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     private void hitSelfToKeepAlive() {
         String url = webServiceConfig.getCurrentAppUrl();
         try {
