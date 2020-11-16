@@ -1,8 +1,10 @@
 package com.hermes.cloudmessaging.exception;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class BaseException extends Exception {
 

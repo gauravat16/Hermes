@@ -2,7 +2,9 @@ package com.hermes.cloudmessaging.dto.lookup;
 
 import com.hermes.cloudmessaging.dto.BaseMessage;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class PromoMessage extends BaseMessage {
     private String isForPro;
