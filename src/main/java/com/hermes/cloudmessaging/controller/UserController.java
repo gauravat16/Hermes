@@ -20,4 +20,9 @@ public class UserController {
         return ResponseEntity.ok().body(userCrudService.create(userCreationRequest));
     }
 
+    @GetMapping("/logout")
+    private ResponseEntity<String> logout() {
+        return ResponseEntity.ok().body("Logged Out");
+    }
+
 }

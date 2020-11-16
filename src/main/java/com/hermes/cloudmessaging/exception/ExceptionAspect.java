@@ -18,7 +18,7 @@ public class ExceptionAspect {
         return new ResponseEntity<>(baseResponseDto, e.getHttpStatus());
     }
 
-    @ExceptionHandler(value = {BaseRuntimeException.class})
+    @ExceptionHandler(value = {BaseRuntimeException.class, DequeueException.class, EnqueueException.class})
     private ResponseEntity<BaseResponseDto<String>> handleBaseException(BaseRuntimeException e) {
         if (e.canLogError()) {
             log.debug(e.getMessage(), e);
