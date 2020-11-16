@@ -49,7 +49,7 @@ public class JavaQueueService<T extends QueueRequest> implements QueueService<T>
     @Override
     @Scheduled(cron = "*/5 * * * * *")
     public Object dequeue() throws DequeueException {
-        if (queue.size() == 0) throw new DequeueException("Queue is empty", HttpStatus.NO_CONTENT, true);
+        if (queue.size() == 0) throw new DequeueException("Queue is empty", HttpStatus.NO_CONTENT, false);
         try {
             T request = queue.poll(2, TimeUnit.SECONDS);
             if (null == request || request.getType() == null || request.getRequest() == null)
