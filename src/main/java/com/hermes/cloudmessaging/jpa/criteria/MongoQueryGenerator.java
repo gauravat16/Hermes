@@ -46,16 +46,15 @@ public class MongoQueryGenerator {
      * @return List of {@link SearchCriteria}
      */
     private List<SearchCriteria> parseQuery(String query) {
+        Assert.notNull(query, "Query is null");
+
         String[] tokens = query.split(";");
         Assert.notEmpty(tokens, "Invalid query " + query + " :: has missing ';'");
 
         List<SearchCriteria> searchCriterias = new ArrayList<>();
 
         for (String token : tokens) {
-            String[] elem = token.split(",");
-
-            Assert.notEmpty(tokens, "Invalid token " + token + " :: has missing ','");
-            Assert.isTrue(elem.length == 3, "Invalid query " + token);
+            String[] elem = validateAndSplitToken(token, ",");
 
             Operation operation = Operation.getOperationForString(elem[1]);
             Assert.notNull(operation, "Invalid operation  " + token);
@@ -90,5 +89,19 @@ public class MongoQueryGenerator {
         }
 
         throw new IllegalArgumentException("Invalid operation");
+    }
+
+    private String[] validateAndSplitToken(String token, String delim) {
+        String[] elem = token.split(delim);
+
+        Assert.isTrue(elem.length == 3, "Invalid query " + token);
+        Assert.notNull(elem[0], "LHS is null");
+        Assert.notNull(elem[1], "operation is null");
+        Assert.notNull(elem[2], "RHS is null");
+        elem[0] = elem[0].trim();
+        elem[1] = elem[1].trim();
+        elem[2] = elem[2].trim();
+
+        return elem;
     }
 }

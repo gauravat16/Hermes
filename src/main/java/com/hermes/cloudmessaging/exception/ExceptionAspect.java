@@ -18,7 +18,7 @@ public class ExceptionAspect {
         return new ResponseEntity<>(baseResponseDto, e.getHttpStatus());
     }
 
-    @ExceptionHandler(value = {BaseRuntimeException.class, DequeueException.class, EnqueueException.class})
+    @ExceptionHandler(value = {BaseRuntimeException.class})
     private ResponseEntity<BaseResponseDto<String>> handleBaseException(BaseRuntimeException e) {
         if (e.canLogError()) {
             log.debug(e.getMessage(), e);
@@ -28,8 +28,16 @@ public class ExceptionAspect {
         return new ResponseEntity<>(baseResponseDto, e.getHttpStatus());
     }
 
-    @ExceptionHandler(value = {Exception.class, UnsupportedOperationException.class})
+    @ExceptionHandler(value = {Exception.class})
     private ResponseEntity<BaseResponseDto<String>> handleBaseException(Exception e) {
+        log.debug(e.getMessage(), e);
+        BaseResponseDto<String> baseResponseDto = new BaseResponseDto<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(baseResponseDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {RuntimeException.class})
+    private ResponseEntity<BaseResponseDto<String>> handleBaseException(RuntimeException e) {
         log.debug(e.getMessage(), e);
         BaseResponseDto<String> baseResponseDto = new BaseResponseDto<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 

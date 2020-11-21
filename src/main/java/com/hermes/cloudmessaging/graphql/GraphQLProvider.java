@@ -1,13 +1,11 @@
 package com.hermes.cloudmessaging.graphql;
 
-import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.hermes.cloudmessaging.dto.FCMRegistrationResponse;
 import com.hermes.cloudmessaging.dto.request.CloudMessageRequest;
-import com.hermes.cloudmessaging.service.QueueService;
 import com.hermes.cloudmessaging.service.impl.CloudMsgRegistrationDBService;
+import graphql.kickstart.tools.GraphQLMutationResolver;
+import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,16 +17,17 @@ public class GraphQLProvider implements GraphQLQueryResolver, GraphQLMutationRes
     @Autowired
     private CloudMsgRegistrationDBService cloudMsgRegistrationDBService;
 
-    public List<FCMRegistrationResponse> getByQuery(String id, String deviceName, String osVersion, String appVersion, String cloudMessagingId, String metadata) {
-        return cloudMsgRegistrationDBService.find(paramsToRequest(deviceName, osVersion, appVersion, cloudMessagingId, metadata));
+
+    public List<FCMRegistrationResponse> getByQuery(String id, String deviceName, String osVersion, String appVersion, String cloudMessagingId, String customQuery) {
+        return cloudMsgRegistrationDBService.find(paramsToRequest(deviceName, osVersion, appVersion, cloudMessagingId, customQuery));
     }
 
     public FCMRegistrationResponse addDeviceData(String deviceName, String osVersion, String appVersion, String cloudMessagingId, String metadata) {
         return cloudMsgRegistrationDBService.create(paramsToRequest(deviceName, osVersion, appVersion, cloudMessagingId, metadata));
     }
 
-    public List<FCMRegistrationResponse> deleteDeviceData(String deviceName, String osVersion, String appVersion, String cloudMessagingId, String metadata) {
-        return cloudMsgRegistrationDBService.delete(paramsToRequest(deviceName, osVersion, appVersion, cloudMessagingId, metadata));
+    public List<FCMRegistrationResponse> deleteDeviceData(String deviceName, String osVersion, String appVersion, String cloudMessagingId, String customQuery) {
+        return cloudMsgRegistrationDBService.delete(paramsToRequest(deviceName, osVersion, appVersion, cloudMessagingId, customQuery));
     }
 
     public FCMRegistrationResponse updateDeviceData(String deviceName, String osVersion, String appVersion, String cloudMessagingId, String metadata) {

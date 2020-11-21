@@ -3,12 +3,12 @@ schema {
     mutation: Mutation
 }
 type Query {
-    getByQuery(id: ID, deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String, metadata: String): [Registry]
+    getByQuery(id: ID, deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String, customQuery: String): [Registry]
 }
 
 type Mutation{
     addDeviceData(deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String, metadata: String): Registry
-    deleteDeviceData(deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String, metadata: String): [Registry]
+    deleteDeviceData(deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String, customQuery: String): [Registry]
     updateDeviceData(deviceName: String, osVersion: String, appVersion: String, cloudMessagingId: String, metadata: String): Registry
 }
 
