@@ -1,8 +1,8 @@
 package com.hermes.cloudmessaging.security;
 
-import com.hermes.cloudmessaging.dto.request.UserCreationRequest;
-import com.hermes.cloudmessaging.entity.mongo.User;
-import com.hermes.cloudmessaging.service.impl.UserCrudService;
+import com.hermes.cloudmessaging.model.dto.request.UserCreationRequest;
+import com.hermes.cloudmessaging.database.entity.mongo.User;
+import com.hermes.cloudmessaging.core.impl.UserCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

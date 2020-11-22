@@ -1,6 +1,6 @@
 package com.hermes.cloudmessaging.security;
 
-import com.hermes.cloudmessaging.entity.mongo.User;
+import com.hermes.cloudmessaging.database.entity.mongo.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
