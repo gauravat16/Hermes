@@ -1,4 +1,4 @@
-package com.hermes.cloudmessaging.core.utils;
+package com.hermes.cloudmessaging.server.util;
 
 import com.hermes.cloudmessaging.server.config.WebServiceConfig;
 import lombok.extern.log4j.Log4j2;
@@ -21,7 +21,7 @@ public class HerokuHack {
         this.webServiceConfig = webServiceConfig;
     }
 
-    @Scheduled(cron = "0 0/5 * * * ?")
+//    @Scheduled(cron = "0 0/5 * * * ?")
     private void hitSelfToKeepAlive() {
         String url = webServiceConfig.getCurrentAppUrl();
         try {
