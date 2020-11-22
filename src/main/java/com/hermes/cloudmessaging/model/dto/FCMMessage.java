@@ -2,12 +2,14 @@ package com.hermes.cloudmessaging.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.Map;
 
 @Data
 @ToString
+@NoArgsConstructor
 public class FCMMessage {
 
     private Map<String, String> data;

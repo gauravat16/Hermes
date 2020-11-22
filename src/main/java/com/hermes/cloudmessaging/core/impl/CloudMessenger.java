@@ -27,7 +27,7 @@ public class CloudMessenger implements Messenger<FCMMessage, FCMResponse> {
     @Override
     public FCMResponse sendMessageToUser(FCMMessage request) {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-        headers.add("Authorization", webServiceConfig.getGoogleFcmAuth());
+        headers.add("Authorization", "key="+webServiceConfig.getGoogleFcmAuth());
         HttpEntity<FCMMessage> requestEntity = new HttpEntity<>(request, headers);
 
         return restTemplate.postForObject(URI.create(webServiceConfig.getGoogleFCMUrl()), requestEntity, FCMResponse.class);
