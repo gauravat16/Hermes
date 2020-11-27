@@ -11,32 +11,52 @@ Data can be queried using a combination of GraphQL and Custom metadata query.
 
 **Query**
 
-```query {
-    getByQuery(metadata: "metadata.isUDPluginEnabled,=,true;metadata.dateForNotif,=,'2020-08-16'") {
-      deviceName
-      cloudMessagingId
-    }
+```   getByQuery(customQuery:"deviceName %% 'Redm' $or  deviceName %% 'Pix' $and osVersion >= '28'") {
+    deviceName
+    osVersion
+    appVersion
   }
 ```
 
 **Response** 
 
 ````{
-    "data": {
-      "getByQuery": [
-        {
-          "deviceName": "Android SDK built for x86_64",
-          "cloudMessagingId": "eOAbH3rkWfUxgaGLLm:APA91bH1x82YnuNwJPW_Z_ZjA41Ovya0uGkGRUmmJsVeAIGdS1eHL1vzerUHoF8TlfIm8l6pe_uLrixZ0Az1uAjq7t-umiyCqIsik1kPN4CVPiSYBJsYhEFRw4K2KD89OEA8G"
-        }
-      ]
-    }
+  "data": {
+    "getByQuery": [
+      {
+        "deviceName": "Pixel 3",
+        "osVersion": "28",
+        "appVersion": "3852"
+      },
+      {
+        "deviceName": "Pixel 3",
+        "osVersion": "28",
+        "appVersion": "3852"
+      },
+      {
+        "deviceName": "Pixel 3",
+        "osVersion": "28",
+        "appVersion": "3852"
+      },
+      {
+        "deviceName": "Pixel 3",
+        "osVersion": "28",
+        "appVersion": "3852"
+      },
+      {
+        "deviceName": "Redmi Note 7",
+        "osVersion": "29",
+        "appVersion": "3852"
+      }
+    ]
   }
+}
 ````
 
 #### Metadata Query
 
 **Structure**
 
-```<key1>,<operation1>,<value1>;<key2>,<operation2>,<value2>```
+```<key1> <operation1> <value1> $and/$or <key2> <operation2> <value2>```
 
-```val1,=,23;val2,=,ABC```
+```deviceName %% 'Redm' $or  deviceName %% 'Pix' $and osVersion >= '28'```
