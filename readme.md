@@ -11,7 +11,8 @@ Data can be queried using a combination of GraphQL and Custom metadata query.
 
 **Query**
 
-```   getByQuery(customQuery:"deviceName %% 'Redm' $or  deviceName %% 'Pix' $and osVersion >= '28'") {
+```   
+getByQuery(customQuery:"deviceName %% 'Redm' $or  deviceName %% 'Pix' $and osVersion >= '28'") {
     deviceName
     osVersion
     appVersion
@@ -20,7 +21,8 @@ Data can be queried using a combination of GraphQL and Custom metadata query.
 
 **Response** 
 
-````{
+````
+{
   "data": {
     "getByQuery": [
       {
