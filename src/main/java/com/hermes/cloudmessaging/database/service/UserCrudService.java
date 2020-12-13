@@ -1,4 +1,4 @@
-package com.hermes.cloudmessaging.core.impl;
+package com.hermes.cloudmessaging.database.service;
 
 import com.hermes.cloudmessaging.model.constants.enums.UserRoles;
 import com.hermes.cloudmessaging.model.dto.request.UserCreationRequest;
@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Service("UserCrudService")
 public class UserCrudService implements DbCRUDService<User, UserCreationRequest, User, String> {
 
     private final UsersRepository usersRepository;

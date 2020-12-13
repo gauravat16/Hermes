@@ -1,11 +1,18 @@
 package com.hermes.cloudmessaging.server.controller;
 
+import com.hermes.cloudmessaging.database.entity.mongo.CloudMessagingRegistryEntity;
+import com.hermes.cloudmessaging.model.dto.FCMMessage;
+import com.hermes.cloudmessaging.model.dto.FCMRegistrationResponse;
+import com.hermes.cloudmessaging.model.dto.request.CloudMessageRequest;
 import com.hermes.cloudmessaging.model.dto.request.SendMsgRequest;
 import com.hermes.cloudmessaging.model.dto.response.FCMResponse;
 import com.hermes.cloudmessaging.core.impl.CloudMessenger;
-import com.hermes.cloudmessaging.core.impl.CloudMsgRegistrationDBService;
+import com.hermes.cloudmessaging.database.service.CloudMsgRegistrationDBService;
+import com.hermes.cloudmessaging.service.DbCRUDService;
+import com.hermes.cloudmessaging.service.Messenger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +28,13 @@ import java.util.stream.Collectors;
 public class MessagingController {
 
     @Autowired
-    private CloudMessenger cloudMessenger;
+    @Qualifier("CloudMessenger")
+    private Messenger<FCMMessage, FCMResponse> cloudMessenger;
 
     @Autowired
-    private CloudMsgRegistrationDBService dbCRUDService;
+    @Qualifier("CloudMsgRegistrationDBService")
+    private DbCRUDService<CloudMessagingRegistryEntity, CloudMessageRequest, FCMRegistrationResponse, Long>
+            dbCRUDService;
 
     @PostMapping("/new-message")
     public List<FCMResponse> sendMessage(@RequestBody SendMsgRequest msgRequest) {

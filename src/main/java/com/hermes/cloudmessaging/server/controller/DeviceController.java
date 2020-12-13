@@ -1,14 +1,16 @@
 package com.hermes.cloudmessaging.server.controller;
 
+import com.hermes.cloudmessaging.database.entity.mongo.CloudMessagingRegistryEntity;
 import com.hermes.cloudmessaging.model.dto.FCMRegistrationResponse;
 import com.hermes.cloudmessaging.model.dto.request.CloudMessageRequest;
 import com.hermes.cloudmessaging.model.dto.request.QueueRequest;
 import com.hermes.cloudmessaging.model.dto.response.BaseResponseDto;
+import com.hermes.cloudmessaging.service.DbCRUDService;
 import com.hermes.cloudmessaging.service.QueueService;
-import com.hermes.cloudmessaging.core.impl.CloudMsgRegistrationDBService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,13 +24,15 @@ import java.util.List;
 @Log4j2
 public class DeviceController {
 
-    private final CloudMsgRegistrationDBService dbCRUDService;
-
+    private final DbCRUDService<CloudMessagingRegistryEntity,
+            CloudMessageRequest, FCMRegistrationResponse, Long> dbCRUDService;
 
     private final QueueService<QueueRequest> queueService;
 
-    public DeviceController(CloudMsgRegistrationDBService dbCRUDService,
-                            QueueService<QueueRequest> queueService) {
+    public DeviceController(
+            @Qualifier("CloudMsgRegistrationDBService") DbCRUDService<CloudMessagingRegistryEntity,
+                    CloudMessageRequest, FCMRegistrationResponse, Long> dbCRUDService,
+            QueueService<QueueRequest> queueService) {
         this.dbCRUDService = dbCRUDService;
         this.queueService = queueService;
     }

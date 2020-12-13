@@ -2,8 +2,10 @@ package com.hermes.cloudmessaging.security;
 
 import com.hermes.cloudmessaging.model.dto.request.UserCreationRequest;
 import com.hermes.cloudmessaging.database.entity.mongo.User;
-import com.hermes.cloudmessaging.core.impl.UserCrudService;
+import com.hermes.cloudmessaging.database.service.UserCrudService;
+import com.hermes.cloudmessaging.service.DbCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,10 +14,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserCrudService userCrudService;
+    private final DbCRUDService<User, UserCreationRequest, User, String> userCrudService;
 
-    @Autowired
-    public UserDetailsServiceImpl(UserCrudService userCrudService) {
+    public UserDetailsServiceImpl(@Qualifier("UserCrudService") DbCRUDService<User, UserCreationRequest,
+            User, String> userCrudService) {
         this.userCrudService = userCrudService;
     }
 
