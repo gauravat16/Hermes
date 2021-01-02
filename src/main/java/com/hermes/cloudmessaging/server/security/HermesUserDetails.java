@@ -1,6 +1,6 @@
-package com.hermes.cloudmessaging.security;
+package com.hermes.cloudmessaging.server.security;
 
-import com.hermes.cloudmessaging.model.entity.mongo.User;
+import com.hermes.cloudmessaging.model.dto.request.UserCreationResponse;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,9 +9,9 @@ import java.util.Collections;
 
 public class HermesUserDetails implements UserDetails {
 
-    private final User user;
+    private final UserCreationResponse user;
 
-    public HermesUserDetails(User user) {
+    public HermesUserDetails(UserCreationResponse user) {
         this.user = user;
     }
 
@@ -48,5 +48,9 @@ public class HermesUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public UserCreationResponse getUser() {
+        return user;
     }
 }

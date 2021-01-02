@@ -1,5 +1,6 @@
 package com.hermes.cloudmessaging.model.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hermes.cloudmessaging.model.constants.enums.UserRoles;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,11 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCreationRequest {
+public class UserCreationResponse {
 
     private String userId;
 
-    private String passwordHash;
+    private UserRoles role;
 
-    private UserRoles userRole;
+    @JsonIgnore
+    private String passwordHash;
 }

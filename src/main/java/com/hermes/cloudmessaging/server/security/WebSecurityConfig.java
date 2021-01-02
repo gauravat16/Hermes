@@ -1,4 +1,4 @@
-package com.hermes.cloudmessaging.security;
+package com.hermes.cloudmessaging.server.security;
 
 import com.hermes.cloudmessaging.model.constants.enums.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/user/login", "/user/logout", "/device/heart-beat")
+                .antMatchers("/user/login", "/user/logout", "/device/heart-beat", "/user/register")
                 .permitAll()
                 .and()
                 .authorizeRequests()
