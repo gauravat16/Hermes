@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableAsync
-@EnableMongoRepositories(basePackages = {"com.hermes.cloudmessaging.database"})
+@EnableMongoRepositories(basePackages = {"com.hermes.cloudmessaging.service"})
 @SpringBootApplication(scanBasePackages = {"com.hermes.cloudmessaging"})
 @EnableConfigurationProperties
 @EnableScheduling

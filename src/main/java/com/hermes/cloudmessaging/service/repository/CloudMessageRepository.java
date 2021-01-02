@@ -1,6 +1,6 @@
-package com.hermes.cloudmessaging.database.repository;
+package com.hermes.cloudmessaging.service.repository;
 
-import com.hermes.cloudmessaging.database.entity.mongo.MessageEntity;
+import com.hermes.cloudmessaging.model.entity.mongo.MessageEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,11 +1,11 @@
-package com.hermes.cloudmessaging.database.service;
+package com.hermes.cloudmessaging.core.impl;
 
 import com.hermes.cloudmessaging.model.constants.enums.UserRoles;
 import com.hermes.cloudmessaging.model.dto.request.UserCreationRequest;
-import com.hermes.cloudmessaging.database.entity.mongo.User;
+import com.hermes.cloudmessaging.model.entity.mongo.User;
 import com.hermes.cloudmessaging.server.exception.BaseRuntimeException;
-import com.hermes.cloudmessaging.database.repository.UsersRepository;
 import com.hermes.cloudmessaging.service.DbCRUDService;
+import com.hermes.cloudmessaging.service.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;

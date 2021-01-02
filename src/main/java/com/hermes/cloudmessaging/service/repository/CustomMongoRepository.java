@@ -1,7 +1,7 @@
-package com.hermes.cloudmessaging.database.repository;
+package com.hermes.cloudmessaging.service.repository;
 
 import com.hermes.cloudmessaging.model.dto.request.IndexCreationRequest;
-import com.hermes.cloudmessaging.database.entity.mongo.CloudMessagingRegistryEntity;
+import com.hermes.cloudmessaging.model.entity.mongo.CloudMessagingRegistryEntity;
 
 import java.util.List;
 

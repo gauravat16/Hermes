@@ -1,13 +1,11 @@
 package com.hermes.cloudmessaging.server.controller;
 
-import com.hermes.cloudmessaging.database.entity.mongo.CloudMessagingRegistryEntity;
+import com.hermes.cloudmessaging.model.entity.mongo.CloudMessagingRegistryEntity;
 import com.hermes.cloudmessaging.model.dto.FCMMessage;
 import com.hermes.cloudmessaging.model.dto.FCMRegistrationResponse;
 import com.hermes.cloudmessaging.model.dto.request.CloudMessageRequest;
 import com.hermes.cloudmessaging.model.dto.request.SendMsgRequest;
 import com.hermes.cloudmessaging.model.dto.response.FCMResponse;
-import com.hermes.cloudmessaging.core.impl.CloudMessenger;
-import com.hermes.cloudmessaging.database.service.CloudMsgRegistrationDBService;
 import com.hermes.cloudmessaging.service.DbCRUDService;
 import com.hermes.cloudmessaging.service.Messenger;
 import lombok.extern.slf4j.Slf4j;

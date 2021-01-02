@@ -1,6 +1,6 @@
 package com.hermes.cloudmessaging.server.event;
 
-import com.hermes.cloudmessaging.database.entity.mongo.MessageEntity;
+import com.hermes.cloudmessaging.model.entity.mongo.MessageEntity;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 

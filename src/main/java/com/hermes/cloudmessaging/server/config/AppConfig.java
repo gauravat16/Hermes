@@ -1,7 +1,7 @@
 package com.hermes.cloudmessaging.server.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hermes.cloudmessaging.database.entity.mongo.convertors.BasicDBObjectConvertor;
+import com.hermes.cloudmessaging.model.entity.mongo.convertors.BasicDBObjectConvertor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;

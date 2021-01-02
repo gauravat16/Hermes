@@ -1,6 +1,6 @@
 package com.hermes.cloudmessaging.server.aop;
 
-import com.hermes.cloudmessaging.database.entity.mongo.MessageEntity;
+import com.hermes.cloudmessaging.model.entity.mongo.MessageEntity;
 import com.hermes.cloudmessaging.server.event.NewMessageResponseEvent;
 import com.hermes.cloudmessaging.server.exception.BaseRuntimeException;
 import org.aspectj.lang.ProceedingJoinPoint;

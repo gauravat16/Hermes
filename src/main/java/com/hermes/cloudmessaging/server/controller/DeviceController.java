@@ -1,6 +1,6 @@
 package com.hermes.cloudmessaging.server.controller;
 
-import com.hermes.cloudmessaging.database.entity.mongo.CloudMessagingRegistryEntity;
+import com.hermes.cloudmessaging.model.entity.mongo.CloudMessagingRegistryEntity;
 import com.hermes.cloudmessaging.model.dto.FCMRegistrationResponse;
 import com.hermes.cloudmessaging.model.dto.request.CloudMessageRequest;
 import com.hermes.cloudmessaging.model.dto.request.QueueRequest;

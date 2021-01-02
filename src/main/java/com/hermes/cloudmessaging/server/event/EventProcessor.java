@@ -1,6 +1,6 @@
 package com.hermes.cloudmessaging.server.event;
 
-import com.hermes.cloudmessaging.database.repository.CloudMessageRepository;
+import com.hermes.cloudmessaging.service.repository.CloudMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;

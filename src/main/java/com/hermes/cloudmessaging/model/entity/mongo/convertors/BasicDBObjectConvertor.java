@@ -1,4 +1,4 @@
-package com.hermes.cloudmessaging.database.entity.mongo.convertors;
+package com.hermes.cloudmessaging.model.entity.mongo.convertors;
 
 
 import com.mongodb.BasicDBObject;

@@ -1,4 +1,4 @@
-package com.hermes.cloudmessaging.database.entity.mongo;
+package com.hermes.cloudmessaging.model.entity.mongo;
 
 import com.hermes.cloudmessaging.model.constants.enums.UserRoles;
 import lombok.*;

@@ -1,9 +1,9 @@
-package com.hermes.cloudmessaging.database.repository.impl;
+package com.hermes.cloudmessaging.service.repository.impl;
 
 import com.hermes.cloudmessaging.model.dto.request.IndexCreationRequest;
-import com.hermes.cloudmessaging.database.entity.mongo.CloudMessagingRegistryEntity;
+import com.hermes.cloudmessaging.model.entity.mongo.CloudMessagingRegistryEntity;
 import com.hermes.cloudmessaging.database.jpa.criteria.MongoQueryGenerator;
-import com.hermes.cloudmessaging.database.repository.CustomMongoRepository;
+import com.hermes.cloudmessaging.service.repository.CustomMongoRepository;
 import lombok.extern.log4j.Log4j2;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;

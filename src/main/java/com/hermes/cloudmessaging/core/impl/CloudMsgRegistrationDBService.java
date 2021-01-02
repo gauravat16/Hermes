@@ -1,11 +1,11 @@
-package com.hermes.cloudmessaging.database.service;
+package com.hermes.cloudmessaging.core.impl;
 
 import com.hermes.cloudmessaging.model.dto.FCMRegistrationResponse;
 import com.hermes.cloudmessaging.model.dto.request.CloudMessageRequest;
 import com.hermes.cloudmessaging.model.dto.request.QueueRequest;
-import com.hermes.cloudmessaging.database.entity.mongo.CloudMessagingRegistryEntity;
-import com.hermes.cloudmessaging.database.repository.FCMRegistryRepository;
-import com.hermes.cloudmessaging.database.repository.impl.CustomCloudMessagingRepositoryImpl;
+import com.hermes.cloudmessaging.model.entity.mongo.CloudMessagingRegistryEntity;
+import com.hermes.cloudmessaging.service.repository.FCMRegistryRepository;
+import com.hermes.cloudmessaging.service.repository.impl.CustomCloudMessagingRepositoryImpl;
 import com.hermes.cloudmessaging.service.DbCRUDService;
 import com.hermes.cloudmessaging.service.QueueMessageHandler;
 import com.hermes.cloudmessaging.service.QueueService;
