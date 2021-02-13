@@ -1,12 +1,14 @@
 package com.hermes.cloudmessaging.core.impl;
 
 import com.hermes.cloudmessaging.model.dto.request.QueueRequest;
+import com.hermes.cloudmessaging.server.exception.BaseRuntimeException;
 import com.hermes.cloudmessaging.server.exception.DequeueException;
 import com.hermes.cloudmessaging.server.exception.EnqueueException;
 import com.hermes.cloudmessaging.service.QueueMessageHandler;
 import com.hermes.cloudmessaging.service.QueueService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -23,20 +25,26 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class JavaQueueService<T extends QueueRequest> implements QueueService<T> {
+public abstract class AbstractJavaQueueService<T extends QueueRequest> implements QueueService<T> {
 
     private BlockingQueue<T> queue;
-    private Map<QueueRequest.Type, QueueMessageHandler> messageHandlerMap;
+    private List<QueueMessageHandler> messageHandlers;
 
-    @Autowired
-    private List<QueueMessageHandler> queueMessageHandlers;
+    private final List<QueueMessageHandler> queueMessageHandlers;
 
-    @PostConstruct
+    public AbstractJavaQueueService(List<QueueMessageHandler> queueMessageHandlers) {
+        this.queueMessageHandlers = queueMessageHandlers;
+        setQueue();
+    }
+
     private void setQueue() {
         queue = new LinkedBlockingDeque<>();
         if (queueMessageHandlers != null) {
-            messageHandlerMap = queueMessageHandlers.stream()
-                    .collect(Collectors.toMap(QueueMessageHandler::getQueueRequestType, Function.identity()));
+            messageHandlers = queueMessageHandlers.stream().filter(handler -> handler.getQueueRequestType().equals(getQueryType()))
+                    .collect(Collectors.toList());
+        }
+        if (null == messageHandlers || messageHandlers.isEmpty()){
+            throw new IllegalStateException("No Handlers defined for this queue!!");
         }
     }
 
@@ -46,7 +54,6 @@ public class JavaQueueService<T extends QueueRequest> implements QueueService<T>
     }
 
     @Override
-    @Scheduled(cron = "*/5 * * * * *")
     public Object dequeue() throws DequeueException {
         if (queue.size() == 0) return null;
         try {
@@ -56,10 +63,11 @@ public class JavaQueueService<T extends QueueRequest> implements QueueService<T>
 
             QueueRequest.Type type = request.getType();
 
+            Assert.isTrue(type.equals(getQueryType()), "Request type of queued object is different");
             Assert.isTrue(type.getClazz().isInstance(request.getRequest()), "Mismatch of req type and req obj");
-            Assert.isTrue(messageHandlerMap.containsKey(type), "Handler for Request type not found");
 
-            messageHandlerMap.get(type).handleRequest(type.getClazz().cast(request.getRequest()));
+            messageHandlers.forEach(handler -> handler.handleRequest(type.getClazz().cast(request.getRequest())));
+
             return request.getRequest();
 
         } catch (InterruptedException e) {
@@ -70,5 +78,7 @@ public class JavaQueueService<T extends QueueRequest> implements QueueService<T>
             throw new DequeueException("Exception faced when dequeue-ing!", HttpStatus.INTERNAL_SERVER_ERROR, true);
         }
     }
+
+    public abstract QueueRequest.Type getQueryType();
 
 }

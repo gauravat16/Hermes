@@ -10,7 +10,8 @@ public class QueueRequest {
 
     @Getter
     public enum Type {
-        HEART_BEAT(CloudMessageRequest.class);
+        HEART_BEAT(CloudMessageRequest.class),
+        SEND_MESSAGE(SendMsgRequest.class);
         private final Class<?> clazz;
 
         Type(Class<?> clazz) {

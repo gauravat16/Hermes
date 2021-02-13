@@ -1,8 +1,8 @@
 package com.hermes.cloudmessaging.core.impl;
 
-import com.hermes.cloudmessaging.server.config.WebServiceConfig;
 import com.hermes.cloudmessaging.model.dto.FCMMessage;
 import com.hermes.cloudmessaging.model.dto.response.FCMResponse;
+import com.hermes.cloudmessaging.server.config.WebServiceConfig;
 import com.hermes.cloudmessaging.service.Messenger;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
@@ -32,4 +32,5 @@ public class CloudMessenger implements Messenger<FCMMessage, FCMResponse> {
 
         return restTemplate.postForObject(URI.create(webServiceConfig.getGoogleFCMUrl()), requestEntity, FCMResponse.class);
     }
+
 }

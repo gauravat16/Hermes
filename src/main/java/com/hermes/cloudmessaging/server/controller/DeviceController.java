@@ -32,7 +32,7 @@ public class DeviceController {
     public DeviceController(
             @Qualifier("CloudMsgRegistrationDBService") DbCRUDService<CloudMessagingRegistryEntity,
                     CloudMessageRequest, FCMRegistrationResponse, Long> dbCRUDService,
-            QueueService<QueueRequest> queueService) {
+           @Qualifier("heart-beat") QueueService<QueueRequest> queueService) {
         this.dbCRUDService = dbCRUDService;
         this.queueService = queueService;
     }

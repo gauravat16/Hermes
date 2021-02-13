@@ -12,6 +12,7 @@ import com.hermes.cloudmessaging.core.utils.BeanUtils;
 import com.mongodb.BasicDBObject;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -29,7 +30,8 @@ public class CloudMsgRegistrationDBService implements DbCRUDService<CloudMessagi
     private FCMRegistryRepository fcmRegistryRepository;
 
     @Autowired
-    private QueueService<QueueRequest> queueService;
+    @Qualifier("heart-beat")
+    private QueueService<QueueRequest> heartBeatQueueService;
 
     @Autowired
     private MongoTemplate mongoTemplate;

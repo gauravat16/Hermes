@@ -54,7 +54,6 @@ public class MongoQueryGenerator {
         }
         query.addCriteria(criteria);
 
-
         return query;
     }
 

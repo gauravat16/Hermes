@@ -1,5 +1,6 @@
 package com.hermes.cloudmessaging.server.controller;
 
+import com.hermes.cloudmessaging.model.dto.request.QueueRequest;
 import com.hermes.cloudmessaging.model.entity.mongo.CloudMessagingRegistryEntity;
 import com.hermes.cloudmessaging.model.dto.FCMMessage;
 import com.hermes.cloudmessaging.model.dto.FCMRegistrationResponse;
@@ -8,6 +9,7 @@ import com.hermes.cloudmessaging.model.dto.request.SendMsgRequest;
 import com.hermes.cloudmessaging.model.dto.response.FCMResponse;
 import com.hermes.cloudmessaging.service.DbCRUDService;
 import com.hermes.cloudmessaging.service.Messenger;
+import com.hermes.cloudmessaging.service.QueueService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,17 +32,18 @@ public class MessagingController {
     private Messenger<FCMMessage, FCMResponse> cloudMessenger;
 
     @Autowired
+    @Qualifier("send-message")
+    private QueueService<QueueRequest> messageQueueService;
+
+    @Autowired
     @Qualifier("CloudMsgRegistrationDBService")
     private DbCRUDService<CloudMessagingRegistryEntity, CloudMessageRequest, FCMRegistrationResponse, Long>
             dbCRUDService;
 
     @PostMapping("/new-message")
-    public List<FCMResponse> sendMessage(@RequestBody SendMsgRequest msgRequest) {
-
-        return dbCRUDService.find(msgRequest.getCloudMessageRequest()).stream().map(e -> {
-            msgRequest.getMessage().setTo(e.getCloudMessagingId());
-            return cloudMessenger.sendMessageToUser(msgRequest.getMessage());
-        }).filter(Objects::nonNull).collect(Collectors.toList());
+    public String sendMessage(@RequestBody SendMsgRequest msgRequest) {
+        messageQueueService.enqueue(new QueueRequest(QueueRequest.Type.SEND_MESSAGE, msgRequest));
+        return "Enqueued request";
     }
 
 }
