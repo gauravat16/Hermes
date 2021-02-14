@@ -26,6 +26,7 @@ public class QueueManager {
     public void scheduleMessageQueueCron() {
         try {
             Object o = messageQueueService.dequeue();
+            if(o == null) return;
             log.trace("MessageQueue's Dequeued Message {} ", o);
         } catch (Exception e) {
             log.debug("Failed to process queue", e);
@@ -36,6 +37,7 @@ public class QueueManager {
     public void scheduleHeartBeatQueueCron() {
         try {
             Object o = heartBeatQueueService.dequeue();
+            if(o == null) return;
             log.trace("HeartBeatQueue's Dequeued Message {} ", o);
         } catch (Exception e) {
             log.debug("Failed to process queue", e);
