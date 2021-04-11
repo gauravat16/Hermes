@@ -1,4 +1,4 @@
-package com.hermes.cloudmessaging.core.impl;
+package com.hermes.cloudmessaging.database.service;
 
 import com.hermes.cloudmessaging.model.dto.request.IndexCreationRequest;
 import com.hermes.cloudmessaging.model.entity.mongo.CloudMessagingRegistryEntity;

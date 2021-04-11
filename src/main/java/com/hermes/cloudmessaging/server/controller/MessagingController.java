@@ -28,17 +28,8 @@ import java.util.stream.Collectors;
 public class MessagingController {
 
     @Autowired
-    @Qualifier("CloudMessenger")
-    private Messenger<FCMMessage, FCMResponse> cloudMessenger;
-
-    @Autowired
     @Qualifier("send-message")
     private QueueService<QueueRequest> messageQueueService;
-
-    @Autowired
-    @Qualifier("CloudMsgRegistrationDBService")
-    private DbCRUDService<CloudMessagingRegistryEntity, CloudMessageRequest, FCMRegistrationResponse, Long>
-            dbCRUDService;
 
     @PostMapping("/new-message")
     public String sendMessage(@RequestBody SendMsgRequest msgRequest) {

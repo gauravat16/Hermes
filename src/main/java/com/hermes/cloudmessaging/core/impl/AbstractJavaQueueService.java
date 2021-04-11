@@ -1,26 +1,19 @@
 package com.hermes.cloudmessaging.core.impl;
 
 import com.hermes.cloudmessaging.model.dto.request.QueueRequest;
-import com.hermes.cloudmessaging.server.exception.BaseRuntimeException;
 import com.hermes.cloudmessaging.server.exception.DequeueException;
 import com.hermes.cloudmessaging.server.exception.EnqueueException;
 import com.hermes.cloudmessaging.service.QueueMessageHandler;
 import com.hermes.cloudmessaging.service.QueueService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j

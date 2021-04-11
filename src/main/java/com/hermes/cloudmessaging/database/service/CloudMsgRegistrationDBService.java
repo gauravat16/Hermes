@@ -1,4 +1,4 @@
-package com.hermes.cloudmessaging.core.impl;
+package com.hermes.cloudmessaging.database.service;
 
 import com.hermes.cloudmessaging.model.dto.FCMRegistrationResponse;
 import com.hermes.cloudmessaging.model.dto.request.CloudMessageRequest;
