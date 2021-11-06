@@ -1,0 +1,16 @@
+FROM gradle:4.10.0-jdk8-alpine AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+
+RUN gradle build --no-daemon
+
+FROM openjdk:8-jre-alpine
+
+ARG MONGO_USER
+ARG MONGO_PASS
+ARG CURR_WEB_SERVICE_URL
+ARG FCM_AUTH_KEY
+
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/hermes/Hermes.jar
+EXPOSE 8299
+ENTRYPOINT ["java","-jar","/app/hermes/Hermes.jar"]

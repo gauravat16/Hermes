@@ -1,0 +1,648 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "displayMode": "basic",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "rawQuery": true,
+          "refId": "A",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([\n    {\"$group\" : {\"_id\": \"$appVersion\", \"name\": {\"$first\" : \"$appVersion\"}, \"ts\": { \"$first\": \"$createdAt\" }, \"value\":{\"$sum\":1}}},\n    {\"$sort\" : {\"name\" : -1}},{\"$match\" : {\"value\" : {\"$gt\" : 5}}}\n\n])",
+          "type": "timeserie"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "App Versions",
+      "type": "bargauge"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 13,
+        "x": 0,
+        "y": 8
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "rawQuery": true,
+          "refId": "A",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.isUDPluginEnabled\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Urban Dictionary\", \"value\" : 1}}])",
+          "type": "timeserie"
+        },
+        {
+          "rawQuery": true,
+          "refId": "B",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.en_US\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Livio English\", \"value\" : 1}}])",
+          "type": "timeserie"
+        },
+        {
+          "rawQuery": true,
+          "refId": "C",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.it_IT\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Livio Italian\", \"value\" : 1}}])",
+          "type": "timeserie"
+        },
+        {
+          "rawQuery": true,
+          "refId": "D",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.pt_BR\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Livio Portuguese\", \"value\" : 1}}])",
+          "type": "timeserie"
+        },
+        {
+          "rawQuery": true,
+          "refId": "E",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.de_DE\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Livio German\", \"value\" : 1}}])",
+          "type": "timeserie"
+        },
+        {
+          "rawQuery": true,
+          "refId": "F",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.fr_FR\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Livio French\", \"value\" : 1}}])",
+          "type": "timeserie"
+        },
+        {
+          "rawQuery": true,
+          "refId": "G",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.es_ES\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Livio Spanish\", \"value\" : 1}}])",
+          "type": "timeserie"
+        },
+        {
+          "rawQuery": true,
+          "refId": "H",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.wordnet\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"WordNet\", \"value\" : 1}}])",
+          "type": "timeserie"
+        },
+        {
+          "rawQuery": true,
+          "refId": "I",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.browerTab\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Google Define\", \"value\" : 1}}])",
+          "type": "timeserie"
+        },
+        {
+          "rawQuery": true,
+          "refId": "J",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.wikipedia\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Wikipedia\", \"value\" : 1}}])",
+          "type": "timeserie"
+        },
+        {
+          "rawQuery": true,
+          "refId": "K",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.vocabulary\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Vocabulary.com\", \"value\" : 1}}])",
+          "type": "timeserie"
+        },
+        {
+          "rawQuery": true,
+          "refId": "L",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\": { \"metadata.preferences.cambridge\" : true }}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Cambridge\", \"value\" : 1}}])",
+          "type": "timeserie"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Dictionary Usage",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 13,
+        "y": 8
+      },
+      "id": 10,
+      "options": {
+        "displayMode": "basic",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "rawQuery": true,
+          "refId": "A",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([\n    {\"$group\" : {\"_id\": \"$osVersion\", \"name\": {\"$first\" : \"$osVersion\"}, \"ts\": { \"$first\": \"$createdAt\" }, \"value\":{\"$sum\":1}}},\n    {\"$sort\" : {\"name\" : -1}}\n\n])",
+          "type": "timeserie"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "OS versions",
+      "type": "bargauge"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 15
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "rawQuery": true,
+          "refId": "A",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([{\"$match\" : {\"metadata.isProApp\" : true}}, {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Pro Installs\", \"value\" : 1}}])",
+          "type": "timeserie"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Pro Install Count",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 6,
+        "y": 15
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "rawQuery": true,
+          "refId": "A",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([ {\"$group\" : {\"_id\" : null , \"value\" : { \"$sum\" : 1}}}, \n{\"$project\" : {\"ts\" : \"$$NOW\", \"name\" : \"Pro Installs\", \"value\" : 1}}])",
+          "type": "timeserie"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Install Count",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 13,
+        "y": 15
+      },
+      "id": 6,
+      "options": {
+        "displayMode": "basic",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": false
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "rawQuery": true,
+          "refId": "A",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([\n    {\"$group\" : {\"_id\":{ \"$ifNull\" : [\"$metadata.buildType\", \"Unknown\"]}, \"name\": {\"$first\" : { \"$ifNull\" : [\"$metadata.buildType\", \"Unknown\"]}}, \"ts\": { \"$first\": \"$createdAt\" }, \"value\":{\"$sum\":1}}},\n    {\"$sort\" : {\"name\" : -1}}\n\n])",
+          "type": "timeserie"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Build Types",
+      "type": "bargauge"
+    },
+    {
+      "bgColor": null,
+      "colorScheme": "Unique",
+      "datasource": null,
+      "decimal": 2,
+      "displayLabel": true,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "format": "short",
+      "gradientColors": [
+        "red",
+        "green"
+      ],
+      "gradientThresholds": "50,80",
+      "gridPos": {
+        "h": 16,
+        "w": 13,
+        "x": 0,
+        "y": 22
+      },
+      "groupDepthColors": [
+        "hsl(152,80%,80%)",
+        "hsl(228,30%,40%)"
+      ],
+      "groupSeperator": ",",
+      "height": 400,
+      "id": 17,
+      "mode": "time",
+      "nullPointMode": "connected",
+      "pluginVersion": "7.3.6",
+      "svgBubbleId": "svg_17",
+      "svgContainer": {},
+      "targets": [
+        {
+          "rawQuery": true,
+          "refId": "A",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([\n{\"$match\" : {\"metadata.preferences.todaysWord\" : {\"$exists\": true, \"$ne\" : null}}},\n{\"$group\" : {\"_id\" : \"$metadata.preferences.todaysWord\", \"value\":{\"$sum\":1}}},\n{\"$project\" : {\"name\" : \"$_id\", \"ts\" : \"$$NOW\", \"value\" : 1}},\n{\"$sort\" : {\"value\" : -1}},\n{\"$limit\" : 10}\n])",
+          "type": "timeserie"
+        }
+      ],
+      "thresholdColors": [
+        "green",
+        "yellow",
+        "red"
+      ],
+      "thresholds": "50,80",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Top 10 Today's Word",
+      "type": "digrich-bubblechart-panel",
+      "valueName": "current"
+    },
+    {
+      "datasource": "MongoDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 13,
+        "y": 22
+      },
+      "id": 4,
+      "options": {
+        "displayMode": "basic",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": false
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "rawQuery": true,
+          "refId": "A",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([\n    {\"$group\" : {\"_id\":{ \"$ifNull\" : [\"$metadata.preferences.Theme\", \"LIGHT\"]}, \"name\": {\"$first\" : { \"$ifNull\" : [\"$metadata.preferences.Theme\", \"LIGHT\"]}}, \"ts\": { \"$first\": \"$createdAt\" }, \"value\":{\"$sum\":1}}},\n{\"$sort\" : {\"name\" : 1}}\n])",
+          "type": "timeserie"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Theme Distribution",
+      "type": "bargauge"
+    },
+    {
+      "bgColor": null,
+      "colorScheme": "Unique",
+      "datasource": null,
+      "decimal": 2,
+      "displayLabel": true,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "format": "short",
+      "gradientColors": [
+        "red",
+        "green"
+      ],
+      "gradientThresholds": "50,80",
+      "gridPos": {
+        "h": 16,
+        "w": 11,
+        "x": 13,
+        "y": 29
+      },
+      "groupDepthColors": [
+        "hsl(152,80%,80%)",
+        "hsl(228,30%,40%)"
+      ],
+      "groupSeperator": ",",
+      "height": 400,
+      "id": 18,
+      "mode": "time",
+      "nullPointMode": "connected",
+      "pluginVersion": "7.3.6",
+      "svgBubbleId": "svg_18",
+      "svgContainer": {},
+      "targets": [
+        {
+          "rawQuery": true,
+          "refId": "A",
+          "target": "db.CLOUD_MESSAGING_REGISTRY.aggregate([\n{\"$match\" : {\"deviceName\" : {\"$exists\": true, \"$ne\" : null}}},\n{\"$group\" : {\"_id\" : \"$deviceName\", \"value\":{\"$sum\":1}}},\n{\"$project\" : {\"name\" : \"$_id\", \"ts\" : \"$$NOW\", \"value\" : 1}},\n{\"$sort\" : {\"value\" : -1}},\n{\"$limit\" : 10}\n])",
+          "type": "timeserie"
+        }
+      ],
+      "thresholdColors": [
+        "green",
+        "yellow",
+        "red"
+      ],
+      "thresholds": "50,80",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Top 10 Devices",
+      "type": "digrich-bubblechart-panel",
+      "valueName": "current"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 26,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Hermes Dashboard",
+  "uid": "eyv6ZjxGk",
+  "version": 43
+}
